@@ -1,0 +1,31 @@
+{{- $codespaces:= env "CODESPACES" | not | not -}}
+{{- $login:= env "USERNAME" -}}
+{{- $uid:= env "UID" -}}
+{{- $email := "mateusz@mkowalski.com" -}}
+sourceDir = "{{ .chezmoi.sourceDir }}"
+
+[gpg]
+  # ID for your key [C]
+  recipient = "0x759E193F489DC659"
+
+[data]
+  codespaces = {{ $codespaces }}
+{{- if $codespaces }}{{/* Codespaces dotfiles setup is non-interactive, so set an email address */}}
+{{- else }}{{/* Interactive setup, so prompt for an email address */}}
+  {{- $email = promptString "email" }}
+{{- end }}
+  login = "{{ $login }}"
+  uid = "{{ $uid }}"
+  email = "{{ $email }}"
+
+  [data.github]
+    name = "Mateusz Kowalski"
+    email = "{{ $email }}"
+
+  [data.gpgkey]
+    # ID for the signing key [S]
+    sign = "0x759E193F489DC659"
+    # ID for encrypt key [E]
+    encrypt = "0x759E193F489DC659"
+
+umask = 0o22

@@ -1,0 +1,36 @@
+[user]
+        name = {{ .github.name }}
+        useconfigonly = true
+        {{- if .gpgkey.sign }}
+        signingkey = {{ .gpgkey.sign }}
+        {{- end }}
+        email = {{ .github.email }}
+[push]
+        default = simple
+[branch]
+        autosetuprebase = always
+[core]
+        autocrlf = input
+        excludesfile = {{ .chezmoi.homedir }}/.gitignore_global
+        precomposeunicode = true
+        editor = vim
+[credential]
+        {{ if eq .chezmoi.os "darwin" -}}
+        helper = osxkeychain
+        {{ else if eq .chezmoi.os "linux" -}}
+        helper = libsecret
+        {{ end }}
+[merge]
+        ff = true
+{{- if .gpgkey.sign }}
+[gpg]
+	program = gpg
+[commit]
+        gpgsign = true
+{{- end }}
+[alias]
+        lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+        lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+        lg = !"git lg1"
+[pull]
+	ff = only

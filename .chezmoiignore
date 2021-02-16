@@ -1,0 +1,12 @@
+README.md
+private_dot_config/private_Code/User/settings.json
+
+{{- if ne .chezmoi.os "linux" }}
+.config/autorandr
+.config/Code
+.config/dunst
+.config/i3
+{{- end }}
+
+{{- if ne .chezmoi.os "darwin" }}
+{{- end }}

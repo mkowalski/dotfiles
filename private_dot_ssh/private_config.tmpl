@@ -1,0 +1,21 @@
+Include ~/.ssh/config-homelab
+Include ~/.ssh/config-work
+
+Host github.com
+    User git
+
+Host review.opendev.org review.openstack.org
+    User makowals
+    Port 29418
+
+Host *
+    ServerAliveInterval 60
+    IPQoS throughput
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+    {{ if eq .chezmoi.os "darwin" -}}
+    AddKeysToAgent yes
+    UseKeychain no
+    {{ else if eq .chezmoi.os "linux" -}}
+    PubkeyAcceptedKeyTypes +rsa-sha2-256,rsa-sha2-512
+    {{ end -}}

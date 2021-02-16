@@ -1,0 +1,41 @@
+# Folder view configuration files
+.DS_Store
+
+# IDE configurations
+.vscode
+.idea
+*.iws
+*.iml
+*.ipr
+*.allure
+
+# Python virtual environments
+venv*
+
+# Git repository configuration
+.gitreview
+
+# Cache files
+._*
+*~
+*.swp
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# Compiled Python files
+*.pyc
+
+# SSH keys
+id_rsa
+id_ed25519
+
+# Ansible-playbook runs
+.retry
+
+# Bazel artifacts
+/bazel-*
+
+# Terraform state lock
+.terraform.tfstate.lock.info
