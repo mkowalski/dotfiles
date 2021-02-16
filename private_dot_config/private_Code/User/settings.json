@@ -1,0 +1,70 @@
+{
+    "files.associations": {
+        "hosts": "yaml",
+        "merged": "yaml",
+        "*.yml.tmpl": "yaml"
+    },
+    "files.watcherExclude": {
+        "**/venv/**": true
+    },
+    "window.zoomLevel": 0,
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.message.update.show": false,
+    "vs-kubernetes": {
+        "vs-kubernetes.minikube-path": "/home/kmateusz/.vs-kubernetes/tools/minikube/linux-amd64/minikube",
+        "vs-kubernetes.minikube-path.linux": "/home/kmateusz/.vs-kubernetes/tools/minikube/linux-amd64/minikube",
+        "vs-kubernetes.kubectl-path.linux": "/home/mko/.vs-kubernetes/tools/kubectl/kubectl",
+        "vs-kubernetes.helm-path.linux": "/home/kmateusz/.vs-kubernetes/tools/helm/linux-amd64/helm",
+        "vs-kubernetes.draft-path.linux": "/home/kmateusz/.vs-kubernetes/tools/draft/linux-amd64/draft",
+        "vscode-kubernetes.kubectl-path.linux": "/home/kmateusz/.vs-kubernetes/tools/kubectl/kubectl"
+    },
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false,
+    "git.enableCommitSigning": true,
+    "go.formatTool": "goimports",
+    "explorer.autoReveal": "focusNoScroll",
+    "extensions.ignoreRecommendations": true,
+    "workbench.colorTheme": "Quiet Light",
+    "search.useGlobalIgnoreFiles": true,
+    "files.insertFinalNewline": true,
+    "go.languageServerExperimentalFeatures": {
+
+        "diagnostics": true,
+        "documentLink": true
+    },
+    "go.useLanguageServer": true,
+    "[go]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+        },
+        // Optional: Disable snippets, as they conflict with completion ranking.
+        "editor.snippetSuggestions": "none",
+    },
+    "[go.mod]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+        },
+    },
+    "gopls": {
+        // Add parameter placeholders when completing a function.
+        "usePlaceholders": true,
+
+        // If true, enable additional analyses with staticcheck.
+        // Warning: This will significantly increase memory usage.
+        "staticcheck": false,
+    },
+    "yaml.schemas": {
+
+    },
+    "editor.fontFamily": "'Source Code Pro'",
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "githubPullRequests.remotes": [
+        "origin",
+        "upstream",
+        "anapaya"
+    ],
+    "terminal.integrated.fontFamily": "monospace"
+}

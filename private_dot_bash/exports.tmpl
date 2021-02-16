@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+# Increase Bash history size. Allow 32³ entries; the default is 500.
+export HISTSIZE='32768';
+export HISTFILESIZE="${HISTSIZE}";
+# Omit duplicates and commands that begin with a space from history.
+export HISTCONTROL='ignoreboth';
+
+# Gopass specific config
+export GPG_TTY=$(tty)
+source <(gopass completion bash)
+
+# GPG support
+export GPG_TTY=$(/usr/bin/tty)
+{{ if eq .chezmoi.os "darwin" -}}
+export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
+{{ else if eq .chezmoi.os "linux" -}}
+export SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh
+{{ end -}}
+gpg-connect-agent updatestartuptty /bye > /dev/null
+
+# Use libvirt with Vagrant
+#export VAGRANT_DEFAULT_PROVIDER=libvirt
+#export VAGRANT_DISABLE_STRICT_DEPENDENCY_ENFORCEMENT=1
+
+# Multiple hypervisors are not allowed, thus use VBox as default
+export VAGRANT_DEFAULT_PROVIDER=virtualbox
+
+# Use Python 2 for Google Cloud SDK
+# Ref.: https://stackoverflow.com/questions/64010263/attributeerror-module-importlib-has-no-attribute-util
+export CLOUDSDK_PYTHON=python2
+
+# Default k8s config file
+export KUBECONFIG=$HOME/.kube/config;
+
+# Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
+export PYTHONIOENCODING='UTF-8';
+
+# Prefer US English and use UTF-8.
+export LANG='en_US.UTF-8';
+export LC_ALL='en_US.UTF-8';
+
+# Highlight section titles in manual pages.
+export LESS_TERMCAP_md="${yellow}";
+
+# Don’t clear the screen after quitting a manual page.
+export MANPAGER='less -X';
+
+export BYOBU_PREFIX=/usr/local
+
+export GOPATH="/Users/{{ .login }}/go"
+
+{{ if eq .chezmoi.os "darwin" -}}
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export CLICOLOR=1
+{{ end -}}
