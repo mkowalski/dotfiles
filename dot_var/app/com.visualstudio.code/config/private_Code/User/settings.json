@@ -66,5 +66,29 @@
         "upstream",
         "anapaya"
     ],
-    "terminal.integrated.fontFamily": "monospace"
+    "terminal.integrated.fontFamily": "monospace",
+    "python.languageServer": "Pylance",
+    "terminal.integrated.shell.linux": "/usr/bin/env",
+    "terminal.integrated.shellArgs.linux": [
+        "--",
+        "flatpak-spawn",
+        "--host",
+        "toolbox",
+        "enter",
+        "main-toolbox"
+    ],
+    "workbench.editorAssociations": [
+
+    ],
+    "remote.SSH.defaultExtensions": [
+        "editorconfig.editorconfig",
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "golang.go",
+        "hashicorp.terraform",
+        "davidanson.vscode-markdownlint",
+        "ms-python.vscode-pylance",
+        "ms-python.python",
+        "redhat.vscode-yaml"
+    ]
 }

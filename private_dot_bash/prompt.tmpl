@@ -16,7 +16,14 @@ GIT_PS1_SHOWUPSTREAM="auto"
 GIT_PS1_SHOWCOLORHINTS="yes"
 GIT_PS1_SHOWDIRTYSTATE="yes"
 source ~/.bash/.git-prompt.sh
-export PROMPT_COMMAND='__git_ps1 "\u@\H:\w" "\\\$ ";'
+
+# Fedora Toolbox indicator
+if [[ -f /run/.containerenv && -f /run/.toolboxenv ]]; then
+    export PROMPT_COMMAND='__git_ps1 "⬢ \u@\H:\w" "\\\$ ";'
+else
+    export PROMPT_COMMAND='__git_ps1 "\u@\H:\w" "\\\$ ";'
+fi
+
 #export PROMPT_COMMAND='__git_ps1 "\[\033[01;32m\]\u@\H\[\033[00m\]:\w" "\\\$ ";' # For user distinction set this one as green
 
 # Python venv

@@ -51,3 +51,16 @@ alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
 
 # Always use color output for `ls`
 alias ls="command ls ${colorflag}"
+
+{{ if eq .chezmoi.os "linux" -}}
+# Tools installed with Flatpak outside toolbox
+if ! [ -f /run/.containerenv ] || ! [ -f /run/.toolboxenv ]; then
+    alias code="FLATPAK_ENABLE_SDK_EXT=golang flatpak run com.visualstudio.code"
+fi
+
+# Tools not available inside toolbox
+if [[ -f /run/.containerenv && -f /run/.toolboxenv ]]; then
+    alias podman="flatpak-spawn --host podman"
+fi
+
+{{ end -}}
