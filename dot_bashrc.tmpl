@@ -28,6 +28,8 @@ source /dev/stdin <<<"$(gopass completion bash)"
 source ~/.iterm2_shell_integration.bash
 
 {{ else if eq .chezmoi.os "linux" -}}
-# Hook with direnv
-eval "$(direnv hook bash)"
+if [ -f /usr/bin/direnv ]; then
+    # Hook with direnv
+    eval "$(direnv hook bash)"
+fi
 {{ end -}}
