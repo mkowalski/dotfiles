@@ -14,6 +14,7 @@
         excludesfile = {{ .chezmoi.homedir }}/.gitignore_global
         precomposeunicode = true
         editor = vim
+        whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 [credential]
         {{ if eq .chezmoi.os "darwin" -}}
         helper = osxkeychain

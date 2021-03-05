@@ -19,3 +19,7 @@ Host *
     {{ else if eq .chezmoi.os "linux" -}}
     PubkeyAcceptedKeyTypes +rsa-sha2-256,rsa-sha2-512
     {{ end -}}
+    # Accelerate connections by reusing existing connections to the same host
+    ControlMaster auto
+    ControlPath ~/.ssh/controlmasters/%r@%h:%p
+    ControlPersist 5
