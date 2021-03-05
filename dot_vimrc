@@ -9,3 +9,11 @@ set shiftwidth=4    " Indents will have a width of 4
 set softtabstop=4   " Sets the number of columns for a TAB
 set expandtab       " Expand TABs to spaces
 autocmd BufWritePre * %s/\s\+$//e " Remove all trailing spaces before saving
+
+"" Enable line numbers
+"set number
+
+" Highlight trailing whitespace with red
+autocmd BufEnter * highlight BadWhitespace ctermbg=red guibg=red
+autocmd BufEnter * match BadWhitespace /\s\+$/
+

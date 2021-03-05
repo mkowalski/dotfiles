@@ -1,6 +1,3 @@
-# EditorConfig is awesome: http://EditorConfig.org
-
-# top-most EditorConfig file
 root = true
 
 [*]
@@ -8,7 +5,13 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 indent_style = space
-
-[*.pp]
 indent_size = 2
+charset = utf-8
 
+[{*.go,Makefile,.gitmodules,go.mod,go.sum}]
+indent_style = tab
+indent_size = 4
+
+[*.md]
+# Keep trailing whitespaces as they have meaning on Markdown interpretation.
+trim_trailing_whitespace = false
