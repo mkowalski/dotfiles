@@ -57,6 +57,8 @@ alias ls="command ls ${colorflag}"
 if ! [ -f /run/.containerenv ] || ! [ -f /run/.toolboxenv ]; then
     alias code="FLATPAK_ENABLE_SDK_EXT=golang flatpak run com.visualstudio.code"
     alias firefox="flatpak run org.mozilla.firefox"
+    alias chromium="flatpak run org.chromium.Chromium"
+    alias thunderbird="flatpak run org.mozilla.Thunderbird"
 fi
 
 # Tools not available inside toolbox
