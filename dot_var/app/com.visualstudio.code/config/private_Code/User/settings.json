@@ -16,7 +16,8 @@
         "vs-kubernetes.kubectl-path.linux": "/home/mko/.vs-kubernetes/tools/kubectl/kubectl",
         "vs-kubernetes.helm-path.linux": "/home/kmateusz/.vs-kubernetes/tools/helm/linux-amd64/helm",
         "vs-kubernetes.draft-path.linux": "/home/kmateusz/.vs-kubernetes/tools/draft/linux-amd64/draft",
-        "vscode-kubernetes.kubectl-path.linux": "/home/kmateusz/.vs-kubernetes/tools/kubectl/kubectl"
+        "vscode-kubernetes.kubectl-path.linux": "/home/kmateusz/.vs-kubernetes/tools/kubectl/kubectl",
+        "vscode-kubernetes.minikube-path.linux": "/home/kmateusz/.vs-kubernetes/tools/minikube/linux-amd64/minikube"
     },
     "telemetry.enableTelemetry": false,
     "telemetry.enableCrashReporter": false,
@@ -78,7 +79,10 @@
         "main-toolbox"
     ],
     "workbench.editorAssociations": [
-
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
     ],
     "remote.SSH.defaultExtensions": [
         "editorconfig.editorconfig",
