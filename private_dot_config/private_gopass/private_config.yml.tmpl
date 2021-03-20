@@ -6,7 +6,13 @@ mime: true
 nocolor: false
 nopager: false
 notifications: false
-path: /home/{{ .login }}/.password-store
 safecontent: false
+{{ if eq .chezmoi.hostname "Matt-MBP" -}}
+path: ~/.password-store-private
 mounts:
-  private: /home/{{ .login }}/.password-store-private
+  redhat: ~/.password-store-redhat
+{{ else if eq .chezmoi.hostname "Matt-Lenovo" -}}
+path: ~/.password-store-redhat
+mounts:
+  private: ~/.password-store-private
+{{- end -}}
