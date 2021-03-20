@@ -1,5 +1,5 @@
 README.md
-dot_var/app/com.visualstudio.code/config/private_Code/User/settings.json
+com.visualstudio.code-settings.json
 
 {{- if ne .chezmoi.os "linux" }}
 .config/autorandr
