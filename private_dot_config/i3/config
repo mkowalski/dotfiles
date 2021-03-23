@@ -50,6 +50,7 @@ bindsym $mod+Shift+q kill
 
 # Rofi - dmenu replacement
 bindsym $mod+space exec --no-startup-id rofi -show drun -icon-theme Papirus -show-icons
+bindsym $mod+Shift+space exec --no-startup-id gopass ls --flat | rofi -dmenu | xargs --no-run-if-empty gopass show -c
 bindsym $mod+Tab exec --no-startup-id rofi -show window -icon-theme Papirus -show-icons
 
 # change focus
