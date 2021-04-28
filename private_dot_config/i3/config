@@ -249,7 +249,7 @@ colors {
 # Put some useful stuff in the bar
 exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
-exec --no-startup-id flatpak run org.nextcloud.Nextcloud
+exec --no-startup-id flatpak run com.nextcloud.desktopclient.nextcloud
 
 # Configure bindings for audio controls
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ unmute
