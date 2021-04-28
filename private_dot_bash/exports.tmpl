@@ -57,7 +57,11 @@ export MANPAGER='less -X';
 
 export BYOBU_PREFIX=/usr/local
 
+{{ if eq .chezmoi.os "darwin" -}}
 export GOPATH="/Users/{{ .login }}/go"
+{{ else if eq .chezmoi.os "linux" -}}
+export GOPATH="$HOME/go"
+{{ end -}}
 
 {{ if eq .chezmoi.os "darwin" -}}
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
