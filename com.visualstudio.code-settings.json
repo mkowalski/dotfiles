@@ -94,5 +94,6 @@
         "ms-python.vscode-pylance",
         "ms-python.python",
         "redhat.vscode-yaml"
-    ]
+    ],
+    "go.toolsManagement.autoUpdate": true
 }
