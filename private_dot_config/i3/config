@@ -192,11 +192,9 @@ mode $displayMode {
 set $powerMode "[s]leep [h]ibernate [l]ock | [m]ouse"
 bindsym $mod+x mode $powerMode
 mode $powerMode {
-    bindsym s mode "default"; exec systemctl suspend
-    bindsym h mode "default"; exec systemctl hibernate
-    # bindsym l mode "default"; exec ~/bin/lock-wrapper 0:0
+    bindsym s mode "default"; exec "autorandr -l default && systemctl suspend"
+    bindsym h mode "default"; exec "autorandr -l default && systemctl hibernate"
     bindsym l mode "default"; exec ~/bin/lock-wrapper 15:1
-    # bindsym m mode "default"; exec xscreensaver-command -activate
     bindsym m mode "default"; exec ~/bin/logitech-mouse-configure
 
     bindsym Return mode "default"
@@ -204,9 +202,12 @@ mode $powerMode {
 }
 
 # Change touchpad config
+exec --no-startup-id xinput set-prop 'Elan Touchpad' 'libinput Natural Scrolling Enabled' 1
+exec --no-startup-id xinput set-prop 'Elan Touchpad' 'libinput Accel Speed' 0.8
+exec --no-startup-id xinput set-prop 'Elan Touchpad' 'libinput Tapping Enabled' 1
 exec --no-startup-id xinput set-prop 'Synaptics TM3289-021' 'libinput Natural Scrolling Enabled' 1
-exec --no-startup-id xinput set-prop 'Synaptics TM3289-021' 'libinput Accel Speed' 0.8
 exec --no-startup-id xinput set-prop 'Synaptics TM3289-021' 'libinput Tapping Enabled' 1
+exec --no-startup-id xinput set-prop 'Synaptics TM3289-021' 'libinput Accel Speed' 0.8
 
 # Config for Logitech MX Mouse is placed directly in the scripts invoked
 # when changing a workstation due to the fact the device is not yet available
@@ -268,10 +269,10 @@ for_window [class="Spotify"] move to workspace 12
 for_window [class="Element"] move to workspace 8
 
 # Assign workspaces to screens
-workspace "9" output DP-2-1
-workspace "10" output DP-2-1
-workspace "8" output DP-2-1
-workspace "12" output DP-2-1
+workspace "9" output DP-1-1
+workspace "10" output DP-1-1
+workspace "8" output DP-1-1
+workspace "12" output DP-1-1
 
 # Move workspaces between screens
 bindsym $mod+greater move workspace to output right
