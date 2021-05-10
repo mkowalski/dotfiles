@@ -33,7 +33,6 @@
         "diagnostics": true,
         "documentLink": true
     },
-    "go.useLanguageServer": true,
     "[go]": {
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
@@ -69,15 +68,6 @@
     ],
     "terminal.integrated.fontFamily": "monospace",
     "python.languageServer": "Pylance",
-    "terminal.integrated.shell.linux": "/usr/bin/env",
-    "terminal.integrated.shellArgs.linux": [
-        "--",
-        "flatpak-spawn",
-        "--host",
-        "toolbox",
-        "enter",
-        "main-toolbox"
-    ],
     "workbench.editorAssociations": [
         {
             "viewType": "jupyter.notebook.ipynb",

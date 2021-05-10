@@ -52,7 +52,7 @@ alias ls="command ls ${colorflag}"
 {{ if eq .chezmoi.os "linux" -}}
 # Tools installed with Flatpak outside toolbox
 if ! [ -f /run/.containerenv ] || ! [ -f /run/.toolboxenv ]; then
-    alias code="FLATPAK_ENABLE_SDK_EXT=golang flatpak run com.visualstudio.code"
+    #alias code="FLATPAK_ENABLE_SDK_EXT=golang,texlive flatpak run com.visualstudio.code"
     alias firefox="flatpak run org.mozilla.firefox"
     alias chromium="flatpak run org.chromium.Chromium"
     alias thunderbird="flatpak run org.mozilla.Thunderbird"
