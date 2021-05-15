@@ -2,6 +2,7 @@
 
 {{ if eq .chezmoi.os "darwin" -}}
 export PATH="$HOME/bin:/usr/local/opt/curl/bin:/usr/local/opt/openssl@1.1/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/sqlite/bin:/usr/local/sbin:$PATH"
+export PATH="/usr/local/opt/gnupg@2.2/bin:$PATH"
 {{ else if eq .chezmoi.os "linux" -}}
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH:$HOME/go:$HOME/go/bin"
 {{ end -}}
