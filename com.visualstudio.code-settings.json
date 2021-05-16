@@ -68,12 +68,7 @@
     ],
     "terminal.integrated.fontFamily": "monospace",
     "python.languageServer": "Pylance",
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+    "workbench.editorAssociations": [],
     "remote.SSH.defaultExtensions": [
         "editorconfig.editorconfig",
         "mhutchie.git-graph",
