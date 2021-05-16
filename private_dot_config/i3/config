@@ -253,9 +253,9 @@ exec --no-startup-id pasystray
 exec --no-startup-id flatpak run com.nextcloud.desktopclient.nextcloud
 
 # Configure bindings for audio controls
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ unmute
-bindsym XF86AudioLowerVolume exec amixer -q set Master 5%- unmute
-bindsym XF86AudioMute exec amixer -q set Master mute
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
 bindsym XF86AudioMicMute exec amixer -q set Capture toggle
 
 # Configure bindings for brightness control
@@ -288,7 +288,7 @@ bindsym $mod+Shift+minus exec "i3-input -F 'move container to workspace number %
 bindsym --release $mod+Print exec scrot -s -e 'mv $f ~/Pictures/Screenshots/'
 
 # Set wallpaper
-exec --no-startup-id nitrogen --set-scaled ~/Pictures/gnome-wallpapers/adwaita-night.jpg
+exec --no-startup-id nitrogen --set-scaled "/home/kmateusz/Red Hat/Wallpapers-20210510T214316Z-001/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png"
 
 # Run some applications at startup
 #exec thunderbird
@@ -301,4 +301,4 @@ exec --no-startup-id xset dpms 1800 0 0
 
 # Additional bindings
 # bindsym XF86Favorites exec amixer -q set Capture toggle
-# bindsym XF86Display
+bindsym XF86Display exec autorandr -l default
