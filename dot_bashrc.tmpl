@@ -32,4 +32,6 @@ if [ -f /usr/bin/direnv ]; then
     # Hook with direnv
     eval "$(direnv hook bash)"
 fi
+
+[[ -r "/etc/profile.d/bash_completion.sh" ]] && . "/etc/profile.d/bash_completion.sh"
 {{ end -}}
