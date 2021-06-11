@@ -25,7 +25,10 @@ data.location=~/.task
 #include /usr/share/task/dark-yellow-green.theme
 #include /usr/share/task/dark-gray-256.theme
 #include /usr/share/task/dark-gray-blue-256.theme
-#include /usr/share/task/solarized-dark-256.theme
+include /usr/share/task/solarized-dark-256.theme
 #include /usr/share/task/solarized-light-256.theme
 #include /usr/share/task/no-color.theme
 
+weekstart=monday
+
+report.ls.filter=status:pending and (project.not:lightning-filter project.not:scion-apps project.not:scion-tutorials project.not:scion-apps project.not:scionlab project.not:pylxd project.not:element-ios project.not:scionlab-game project.not:ripe-atlas-software-probe project.not:pcf-pipelines project.not:docker-registry-proxy project.not:django-redis-sentinel)
