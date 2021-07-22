@@ -175,7 +175,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Create bindings for screen layouts
-set $displayMode "Set display mode [a] automatic [l]aptop"
+set $displayMode "Set display mode [a]utomatic [l]aptop"
 bindsym $mod+Shift+x mode $displayMode
 mode $displayMode {
     #bindsym 2 exec autorandr --load work-2; mode "default"
@@ -196,6 +196,18 @@ mode $powerMode {
     bindsym h mode "default"; exec "autorandr -l default && systemctl hibernate"
     bindsym l mode "default"; exec ~/bin/lock-wrapper 15:1
     bindsym m mode "default"; exec ~/bin/logitech-mouse-configure
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Create bindings for screen temperature
+set $tempMode "Set temperature [a] 6500K [b] 4500K [c] 3400K"
+bindsym $mod+Shift+z mode $tempMode
+mode $tempMode {
+    bindsym a mode "default"; exec "redshift -x && redshift -O 6500"
+    bindsym b mode "default"; exec "redshift -x && redshift -O 4500"
+    bindsym c mode "default"; exec "redshift -x && redshift -O 3400"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
