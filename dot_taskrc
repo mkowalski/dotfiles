@@ -29,6 +29,126 @@ include /usr/share/task/solarized-dark-256.theme
 #include /usr/share/task/solarized-light-256.theme
 #include /usr/share/task/no-color.theme
 
-weekstart=monday
+# Terminal
+curses=on				# Use ncurses library to determine terminal width
+defaultwidth=180			# Without ncurses, assumed width
+editor=vim				# Preferred text editor
 
+# Miscellaneous
+search.case.sensitive=no		# Setting to no allows case insensitive searches
+default.command=list			# When no arguments are specified
+journal.time=on
+
+# Dates
+dateformat=Y-m-d			# Preferred input and display date format
+dateformat.holiday=Y-m-d		# Preferred input date format for holidays
+dateformat.report=Y-m-d			# Preferred display date format for repors
+dateformat.annotation=Y-m-d		# Date format for annotations.
+weekstart=monday			# Sunday or Monday only
+displayweeknumber=yes			# Show week numbers on calendar
+due=7					# Task is considered due in 7 days
+
+# Calendar controls
+calendar.legend=yes			# Display the legend on calendar
+calendar.details=sparse			# Calendar shows information for tasks w/due dates: full, sparse or none
+calendar.details.report=list		# Report to use when showing task information in cal
+calendar.holidays=none			# Show public holidays on calendar:full, sparse or none
+#monthsperline=3			# Number of calendar months on a line
+
+# Color controls.
+color=on # Enable color
+
+blanklines=true				# Use more whitespace in output
+complete.all.projects=no		# Include old project names in 'projects' command
+complete.all.tags=no			# Include old tag names in 'tags' command
+debug=no				# Display diagnostics
+hooks=on				# Hook system master switch
+fontunderline=yes			# Uses underlines rather than -------
+shell.prompt=task>			# Prompt used by the shell command
+
+# Aliases
+alias.rm=delete                        # Alias for the delete command
+
+## Reports
+
+# Next
+report.list.columns=id,project,tags,description
+report.list.labels=ID,Project,Tags,Description
+
+#report.next.filter=status:pending limit:page
+report.next.filter=status:pending limit:10
+#report.next.columns=id,project,priority,due,start.active,entry.age,urgency,description
+report.next.columns=id,project,tags,priority,due,start.active,entry.age,urgency,description.desc
+
+# Custom report
+report.digest.description=Daily Digest
+report.digest.columns=project,tags,description
+report.digest.filter=end.after:today status:completed
+report.digest.sort=end+
+
+report._week.description=Week
+report._week.columns=project,description
+report._week.sort=end+
+
+alias.week=execute task_week
+uda.reviewed.type=date
+uda.reviewed.label=Reviewed
+report._reviewed.description=Tasksh review report.  Adjust the filter to your needs.
+report._reviewed.columns=uuid
+report._reviewed.sort=reviewed+,modified+
+report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
+
+# Custom report overrides
 report.ls.filter=status:pending and (project.not:lightning-filter project.not:scion-apps project.not:scion-tutorials project.not:scion-apps project.not:scionlab project.not:pylxd project.not:element-ios project.not:scionlab-game project.not:ripe-atlas-software-probe project.not:pcf-pipelines project.not:docker-registry-proxy project.not:django-redis-sentinel)
+
+# UDAs
+taskd.server=....
+taskd.key=
+taskd.certificate=
+taskd.ca=
+taskd.credentials=...
+uda.notes.type=string
+uda.notes.label=Notes
+taskd.trust=strict
+
+# Bugwarrior UDAs
+uda.githubtitle.type=string
+uda.githubtitle.label=Github Title
+uda.githubbody.type=string
+uda.githubbody.label=Github Body
+uda.githubcreatedon.type=date
+uda.githubcreatedon.label=Github Created
+uda.githubupdatedat.type=date
+uda.githubupdatedat.label=Github Updated
+uda.githubclosedon.type=date
+uda.githubclosedon.label=GitHub Closed
+uda.githubmilestone.type=string
+uda.githubmilestone.label=Github Milestone
+uda.githubrepo.type=string
+uda.githubrepo.label=Github Repo Slug
+uda.githuburl.type=string
+uda.githuburl.label=Github URL
+uda.githubtype.type=string
+uda.githubtype.label=Github Type
+uda.githubnumber.type=numeric
+uda.githubnumber.label=Github Issue/PR #
+uda.githubuser.type=string
+uda.githubuser.label=Github User
+uda.githubnamespace.type=string
+uda.githubnamespace.label=Github Namespace
+uda.githubstate.type=string
+uda.githubstate.label=GitHub State
+
+uda.bugzillabugid.type=string
+uda.bugzillabugid.label=Bugzilla Bug #
+uda.bugzillacomponent.type=string
+uda.bugzillacomponent.label=Bugzilla Component
+uda.bugzillaproduct.type=string
+uda.bugzillaproduct.label=Bugzilla Product
+uda.bugzillastatus.type=string
+uda.bugzillastatus.label=Bugzilla Status
+uda.bugzillasummary.type=string
+uda.bugzillasummary.label=Bugzilla Summary
+uda.bugzillaurl.type=string
+uda.bugzillaurl.label=Bugzilla URL
+# END Bugwarrior UDAs
