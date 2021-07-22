@@ -66,14 +66,10 @@
         "upstream",
         "anapaya"
     ],
-    "terminal.integrated.fontFamily": "monospace",
     "python.languageServer": "Pylance",
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
     "remote.SSH.defaultExtensions": [
         "editorconfig.editorconfig",
         "mhutchie.git-graph",
@@ -85,5 +81,11 @@
         "ms-python.python",
         "redhat.vscode-yaml"
     ],
-    "go.toolsManagement.autoUpdate": true
+    "go.toolsManagement.autoUpdate": true,
+    "redhat.telemetry.enabled": false,
+    "terminal.integrated.fontFamily": "'Source Code Pro'",
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    }
 }
