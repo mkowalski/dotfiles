@@ -300,7 +300,7 @@ bindsym $mod+Shift+minus exec "i3-input -F 'move container to workspace number %
 bindsym --release $mod+Print exec scrot -s -e 'mv $f ~/Pictures/Screenshots/'
 
 # Set wallpaper
-exec --no-startup-id nitrogen --set-scaled "/home/kmateusz/Red Hat/Wallpapers-20210510T214316Z-001/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png"
+exec --no-startup-id nitrogen --set-scaled "/home/kmateusz/Red Hat/001-corporate/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png"
 
 # Run some applications at startup
 #exec thunderbird

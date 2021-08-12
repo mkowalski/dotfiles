@@ -17,9 +17,9 @@ xinput set-prop "Synaptics TM3289-021" "libinput Accel Speed" 0.8
 xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Speed" 0.6
 xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Natural Scrolling Enabled" 1
 
-xinput set-prop 'Synaptics TM3289-021' 'libinput Natural Scrolling Enabled' 1
-xinput set-prop 'Synaptics TM3289-021' 'libinput Accel Speed' 0.8
-xinput set-prop 'Synaptics TM3289-021' 'libinput Tapping Enabled' 1
+xinput set-prop 'Elan Touchpad' 'libinput Natural Scrolling Enabled' 1
+xinput set-prop 'Elan Touchpad' 'libinput Accel Speed' 0.8
+xinput set-prop 'Elan Touchpad' 'libinput Tapping Enabled' 1
 
 xinput set-prop 'Logitech MX Ergo Multi-Device Trackball ' 'libinput Natural Scrolling Enabled' 1
 xinput set-prop 'Logitech MX Ergo Multi-Device Trackball ' 'libinput Accel Speed' 1
