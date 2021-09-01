@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+
+OTP_NAME="OATH39437BE7"
+GOPASS_OTPCLIENT="otpclient-db"
+GOPASS_PIN="corporate/pin/otpclient"
+NM_VPN="Red Hat Global VPN"
+
+TOKEN=$(otpclient-wrapper-expect $(gopass -f ${GOPASS_OTPCLIENT}) ${OTP_NAME} | tail -1 | awk -F ": " '{ print $2 }')
+PIN=$(gopass -f ${GOPASS_PIN})
+PASSWORD=${PIN}${TOKEN}
+
+echo vpn.secrets.password:${PASSWORD} | nmcli connection up "${NM_VPN}" passwd-file /dev/fd/0
