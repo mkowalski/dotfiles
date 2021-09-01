@@ -10,28 +10,18 @@
     "window.zoomLevel": 0,
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.message.update.show": false,
-    "vs-kubernetes": {
-        "vs-kubernetes.minikube-path": "/home/kmateusz/.vs-kubernetes/tools/minikube/linux-amd64/minikube",
-        "vs-kubernetes.minikube-path.linux": "/home/kmateusz/.vs-kubernetes/tools/minikube/linux-amd64/minikube",
-        "vs-kubernetes.kubectl-path.linux": "/home/mko/.vs-kubernetes/tools/kubectl/kubectl",
-        "vs-kubernetes.helm-path.linux": "/home/kmateusz/.vs-kubernetes/tools/helm/linux-amd64/helm",
-        "vs-kubernetes.draft-path.linux": "/home/kmateusz/.vs-kubernetes/tools/draft/linux-amd64/draft",
-        "vscode-kubernetes.kubectl-path.linux": "/home/kmateusz/.vs-kubernetes/tools/kubectl/kubectl",
-        "vscode-kubernetes.minikube-path.linux": "/home/kmateusz/.vs-kubernetes/tools/minikube/linux-amd64/minikube"
-    },
     "telemetry.enableTelemetry": false,
     "telemetry.enableCrashReporter": false,
     "git.enableCommitSigning": true,
     "go.formatTool": "goimports",
     "explorer.autoReveal": "focusNoScroll",
     "extensions.ignoreRecommendations": true,
-    "workbench.colorTheme": "Quiet Light",
     "search.useGlobalIgnoreFiles": true,
     "files.insertFinalNewline": true,
     "go.languageServerExperimentalFeatures": {
 
         "diagnostics": true,
-        "documentLink": true
+        // "documentLink": true
     },
     "[go]": {
         "editor.formatOnSave": true,
@@ -62,9 +52,7 @@
     "files.trimTrailingWhitespace": true,
     "files.trimFinalNewlines": true,
     "githubPullRequests.remotes": [
-        "origin",
         "upstream",
-        "anapaya"
     ],
     "python.languageServer": "Pylance",
     "workbench.editorAssociations": {
@@ -87,5 +75,7 @@
     "notebook.cellToolbarLocation": {
         "default": "right",
         "jupyter-notebook": "left"
-    }
+    },
+    "terminal.integrated.fontWeight": "normal",
+    "workbench.colorTheme": "Monokai"
 }
