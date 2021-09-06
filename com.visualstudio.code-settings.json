@@ -7,7 +7,6 @@
     "files.watcherExclude": {
         "**/venv/**": true
     },
-    "window.zoomLevel": 0,
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.message.update.show": false,
     "telemetry.enableTelemetry": false,
