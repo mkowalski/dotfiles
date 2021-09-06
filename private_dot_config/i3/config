@@ -178,10 +178,7 @@ bindsym $mod+r mode "resize"
 set $displayMode "Set display mode [a]utomatic [l]aptop"
 bindsym $mod+Shift+x mode $displayMode
 mode $displayMode {
-    #bindsym 2 exec autorandr --load work-2; mode "default"
     bindsym l exec autorandr --load default; mode "default"
-    #bindsym h exec autorandr --load home; mode "default"
-    #bindsym m exec autorandr --load meeting; mode "default"
     bindsym a exec autorandr --change; mode "default"
 
     bindsym Return mode "default"
