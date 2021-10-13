@@ -99,7 +99,7 @@ report._reviewed.sort=reviewed+,modified+
 report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
 
 # Custom report overrides
-report.ls.filter=status:pending and (project.not:lightning-filter project.not:scion-apps project.not:scion-tutorials project.not:scion-apps project.not:scionlab project.not:pylxd project.not:element-ios project.not:scionlab-game project.not:ripe-atlas-software-probe project.not:pcf-pipelines project.not:docker-registry-proxy project.not:django-redis-sentinel)
+report.ls.filter=status:pending and (project.not:lightning-filter project.not:scion-apps project.not:scion-tutorials project.not:scion-apps project.not:scionlab project.not:pylxd project.not:element-ios project.not:scionlab-game project.not:ripe-atlas-software-probe project.not:pcf-pipelines project.not:docker-registry-proxy project.not:django-redis-sentinel project.not:synology-wireguard)
 
 # UDAs
 taskd.server=....
