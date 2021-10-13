@@ -53,7 +53,7 @@ alias ls="command ls ${colorflag}"
 # Tools installed with Flatpak outside toolbox
 if ! [ -f /run/.containerenv ] || ! [ -f /run/.toolboxenv ]; then
     #alias code="FLATPAK_ENABLE_SDK_EXT=golang,texlive flatpak run com.visualstudio.code"
-    alias firefox="flatpak run org.mozilla.firefox"
+    #alias firefox="flatpak run org.mozilla.firefox"
     alias chromium="flatpak run org.chromium.Chromium --use-gl=desktop --enable-features=VaapiVideoDecoder"
     alias thunderbird="flatpak run org.mozilla.Thunderbird"
     alias nextcloud="flatpak run org.nextcloud.Nextcloud"
