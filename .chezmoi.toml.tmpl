@@ -2,6 +2,7 @@
 {{- $login:= env "USERNAME" -}}
 {{- $uid:= env "UID" -}}
 {{- $email := "mateusz@mkowalski.com" -}}
+{{- $name := "Mateusz Kowalski" -}}
 sourceDir = "{{ .chezmoi.sourceDir }}"
 
 [gpg]
@@ -12,6 +13,7 @@ sourceDir = "{{ .chezmoi.sourceDir }}"
   codespaces = {{ $codespaces }}
 {{- if $codespaces }}{{/* Codespaces dotfiles setup is non-interactive, so set an email address */}}
 {{- else }}{{/* Interactive setup, so prompt for an email address */}}
+  {{- $name = promptString "name" }}
   {{- $email = promptString "email" }}
 {{- end }}
   login = "{{ $login }}"
@@ -19,7 +21,7 @@ sourceDir = "{{ .chezmoi.sourceDir }}"
   email = "{{ $email }}"
 
   [data.github]
-    name = "Mateusz Kowalski"
+    name = "{{ $name }}"
     email = "{{ $email }}"
 
   [data.gpgkey]
