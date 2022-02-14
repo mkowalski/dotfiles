@@ -65,3 +65,11 @@ if [[ -f /run/.containerenv && -f /run/.toolboxenv ]]; then
 fi
 
 {{ end -}}
+
+# Youtube Downloader
+alias yt-dl='docker run \
+                  --rm -i \
+                  -e PGID=$(id -g) \
+                  -e PUID=$(id -u) \
+                  -v "$(pwd)":/workdir:rw \
+                  mikenye/youtube-dl'
