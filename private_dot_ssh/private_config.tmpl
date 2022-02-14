@@ -21,5 +21,6 @@ Host *
     {{ end -}}
     # Accelerate connections by reusing existing connections to the same host
     ControlMaster auto
-    ControlPath ~/.ssh/controlmasters/%r@%h:%p
+    #ControlPath ~/.ssh/controlmasters/%r@%h:%p
+    ControlPath ~/.ssh/controlmasters/%C
     ControlPersist 5
