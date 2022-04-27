@@ -39,3 +39,6 @@ id_ed25519
 
 # Terraform state lock
 .terraform.tfstate.lock.info
+
+# Skipper configuration
+skipper.yaml

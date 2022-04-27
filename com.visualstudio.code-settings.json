@@ -76,6 +76,8 @@
         "jupyter-notebook": "left"
     },
     "terminal.integrated.fontWeight": "normal",
-    "workbench.colorTheme": "Monokai",
-    "thunder-client.codeSnippetLanguage": "cs-httpclient"
+    "thunder-client.codeSnippetLanguage": "cs-httpclient",
+    "githubPullRequests.terminalLinksHandler": "github",
+    "editor.fontSize": 15,
+    "workbench.colorTheme": "Monokai"
 }
