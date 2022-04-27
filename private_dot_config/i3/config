@@ -302,6 +302,9 @@ exec --no-startup-id nitrogen --set-scaled "/home/kmateusz/Red Hat/001-corporate
 # Configure EnergyStar timeouts
 exec --no-startup-id xset dpms 1800 0 0
 
+# Configure Pulsewire and Wireplumber to respect default devices
+exec --no-startup-id pactl load-module module-switch-on-connect
+
 # Additional bindings
 # bindsym XF86Favorites exec amixer -q set Capture toggle
 bindsym XF86Display exec autorandr -l default
