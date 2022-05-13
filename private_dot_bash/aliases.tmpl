@@ -67,12 +67,11 @@ fi
 {{ end -}}
 
 # Youtube Downloader
-alias yt-dl='docker run \
-                  --rm -i \
-                  -e PGID=$(id -g) \
-                  -e PUID=$(id -u) \
-                  -v "$(pwd)":/workdir:rw \
-                  mikenye/youtube-dl'
+alias yt-dl='podman run \
+               --rm -i \
+               -v "$(pwd)":/app:Z \
+               -w /app \
+               quay.io/mkowalski/youtube-dl:2021.12.17'
 
 # Mosh locale force
 alias mosh='LC_ALL="en_US.UTF-8" mosh'
