@@ -10,3 +10,10 @@ PIN=$(gopass -f ${GOPASS_PIN})
 PASSWORD=${PIN}${TOKEN}
 
 echo vpn.secrets.password:${PASSWORD} | nmcli connection up "${NM_VPN}" passwd-file /dev/fd/0
+
+# Additionally get the kerberos ticket after connection
+KERBEROS_USERNAME="mkowalsk"
+KERBEROS_REALM="IPA.REDHAT.COM"
+GOPASS_KERBEROS="corporate/kerberos/${KERBEROS_USERNAME}"
+
+echo $(gopass -f ${GOPASS_KERBEROS}) | kinit ${KERBEROS_USERNAME}@${KERBEROS_REALM}
