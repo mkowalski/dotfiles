@@ -8,8 +8,8 @@ alias .....="cd ../../../.."
 alias -- -="cd -"
 
 # Docker always as root
-#alias docker='sudo docker'
-#alias docker-compose='sudo docker-compose'
+alias docker='sudo docker'
+alias docker-compose='sudo docker-compose'
 #alias kind='sudo kind'
 
 # Gopass private store ops
@@ -67,7 +67,7 @@ fi
 {{ end -}}
 
 # Youtube Downloader
-alias yt-dl='podman run \
+alias yt-dl='docker run \
                --rm -i \
                -v "$(pwd)":/app:Z \
                -w /app \
