@@ -142,7 +142,7 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+w reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
@@ -206,6 +206,17 @@ mode $tempMode {
     bindsym a mode "default"; exec "redshift -x && redshift -O 6500"
     bindsym b mode "default"; exec "redshift -x && redshift -O 4500"
     bindsym c mode "default"; exec "redshift -x && redshift -O 3400"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Create bindings for camera
+set $camMode "Camera [t]une [r]eset"
+bindsym $mod+Shift+c mode $camMode
+mode $camMode {
+    bindsym t mode "default"; exec "bash ~/.config/i3/scripts/logitech-camera.sh camera_tune"
+    bindsym r mode "default"; exec "bash ~/.config/i3/scripts/logitech-camera.sh camera_reset"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -308,4 +319,3 @@ exec --no-startup-id pactl load-module module-switch-on-connect
 # Additional bindings
 # bindsym XF86Favorites exec amixer -q set Capture toggle
 bindsym XF86Display exec autorandr -l default
-
