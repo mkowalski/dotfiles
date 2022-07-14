@@ -79,5 +79,6 @@
     "thunder-client.codeSnippetLanguage": "cs-httpclient",
     "githubPullRequests.terminalLinksHandler": "github",
     "editor.fontSize": 15,
-    "workbench.colorTheme": "Monokai"
+    "workbench.colorTheme": "Monokai",
+    "editor.minimap.enabled": false
 }
