@@ -1,0 +1,6 @@
+[profile kni-mgmt]
+region=eu-central-1
+[profile edgeinfra]
+region=eu-central-1
+[profile openshift-vmware-cloud-ci]
+region=eu-central-1
