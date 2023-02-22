@@ -187,12 +187,13 @@ mode $displayMode {
 }
 
 # Create bindings for power management
-set $powerMode "[s]leep [h]ibernate [l]ock | [m]ouse"
+set $powerMode "[s]leep [h]ibernate [l]ock [w]indows | [m]ouse"
 bindsym $mod+x mode $powerMode
 mode $powerMode {
     bindsym s mode "default"; exec "autorandr -l default && systemctl suspend"
     bindsym h mode "default"; exec "autorandr -l default && systemctl hibernate"
     bindsym l mode "default"; exec ~/bin/lock-wrapper 15:1
+    bindsym w mode "default"; exec "sudo efibootmgr --bootnext 0000 && autorandr -l default && systemctl hibernate"
     bindsym m mode "default"; exec ~/bin/logitech-mouse-configure
 
     bindsym Return mode "default"
@@ -302,7 +303,7 @@ bindsym $mod+Shift+minus exec "i3-input -F 'move container to workspace number %
 bindsym --release $mod+Print exec scrot -s -e 'mv $f ~/Pictures/Screenshots/'
 
 # Set wallpaper
-exec --no-startup-id nitrogen --set-scaled "/home/kmateusz/Red Hat/001-corporate/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png"
+exec --no-startup-id nitrogen --set-scaled "/home/kmateusz/RHT/001-corporate/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png"
 
 # Run some applications at startup
 #exec thunderbird
