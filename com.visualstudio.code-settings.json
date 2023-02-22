@@ -8,9 +8,7 @@
         "**/venv/**": true
     },
     "latex-workshop.view.pdf.viewer": "tab",
-    "latex-workshop.message.update.show": false,
-    "telemetry.enableTelemetry": false,
-    "telemetry.enableCrashReporter": false,
+    "telemetry.telemetryLevel": "off",
     "git.enableCommitSigning": true,
     "go.formatTool": "goimports",
     "explorer.autoReveal": "focusNoScroll",
@@ -62,11 +60,11 @@
         "mhutchie.git-graph",
         "eamodio.gitlens",
         "golang.go",
-        "hashicorp.terraform",
         "davidanson.vscode-markdownlint",
         "ms-python.vscode-pylance",
         "ms-python.python",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "rust-lang.rust-analyzer"
     ],
     "go.toolsManagement.autoUpdate": true,
     "redhat.telemetry.enabled": false,
@@ -76,9 +74,13 @@
         "jupyter-notebook": "left"
     },
     "terminal.integrated.fontWeight": "normal",
-    "thunder-client.codeSnippetLanguage": "cs-httpclient",
     "githubPullRequests.terminalLinksHandler": "github",
     "editor.fontSize": 15,
     "workbench.colorTheme": "Monokai",
-    "editor.minimap.enabled": false
+    "editor.minimap.enabled": false,
+    "githubPullRequests.pullBranch": "never",
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "editor.formatOnSave": true,
+    }
 }
