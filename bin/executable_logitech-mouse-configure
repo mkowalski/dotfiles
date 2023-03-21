@@ -1,27 +1,28 @@
 #!/bin/sh
 
-xinput set-prop "MX Master 2S Mouse" "libinput Natural Scrolling Enabled" 1
-xinput set-prop "MX Master 2S Mouse" "libinput Accel Speed" 1
-xinput set-prop "MX Master 2S Mouse" 'libinput Accel Profile Enabled' 0, 1
-xinput set-prop "MX Master 2S Mouse" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
+export NAME='MX Master 2S Mouse'
+xinput set-prop "$NAME" "libinput Natural Scrolling Enabled" 1
+xinput set-prop "$NAME" "libinput Accel Speed" 1
+xinput set-prop "$NAME" 'libinput Accel Profile Enabled' 0, 1
+xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
 
-xinput set-prop "MX Anywhere 2 Mouse" "libinput Natural Scrolling Enabled" 1
-xinput set-prop "MX Anywhere 2 Mouse" "libinput Accel Speed" 1
-xinput set-prop "MX Anywhere 2 Mouse" 'libinput Accel Profile Enabled' 0, 1
-xinput set-prop "MX Anywhere 2 Mouse" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
+export NAME='MX Anywhere 2 Mouse'
+xinput set-prop "$NAME" "libinput Natural Scrolling Enabled" 1
+xinput set-prop "$NAME" "libinput Accel Speed" 1
+xinput set-prop "$NAME" 'libinput Accel Profile Enabled' 0, 1
+xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
 
-xinput set-prop "Synaptics TM3289-021" "libinput Tapping Enabled" 1
-xinput set-prop "Synaptics TM3289-021" "libinput Natural Scrolling Enabled" 1
-xinput set-prop "Synaptics TM3289-021" "libinput Accel Speed" 0.8
+export NAME='Elan TrackPoint'
+xinput set-prop "$NAME" "libinput Accel Speed" 0.6
+xinput set-prop "$NAME" "libinput Natural Scrolling Enabled" 1
 
-xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Speed" 0.6
-xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Natural Scrolling Enabled" 1
+export NAME='Elan Touchpad'
+xinput set-prop "$NAME" 'libinput Natural Scrolling Enabled' 1
+xinput set-prop "$NAME" 'libinput Accel Speed' 0.8
+xinput set-prop "$NAME" 'libinput Tapping Enabled' 1
 
-xinput set-prop 'Elan Touchpad' 'libinput Natural Scrolling Enabled' 1
-xinput set-prop 'Elan Touchpad' 'libinput Accel Speed' 0.8
-xinput set-prop 'Elan Touchpad' 'libinput Tapping Enabled' 1
-
-xinput set-prop 'Logitech MX Ergo Multi-Device Trackball ' 'libinput Natural Scrolling Enabled' 1
-xinput set-prop 'Logitech MX Ergo Multi-Device Trackball ' 'libinput Accel Speed' 1
-xinput set-prop 'Logitech MX Ergo Multi-Device Trackball ' 'libinput Accel Profile Enabled' 1, 0
-xinput set-prop 'Logitech MX Ergo Multi-Device Trackball ' 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
+export NAME='MX Ergo'
+xinput set-prop "$NAME" 'libinput Natural Scrolling Enabled' 1
+xinput set-prop "$NAME" 'libinput Accel Speed' 1
+xinput set-prop "$NAME" 'libinput Accel Profile Enabled' 1, 0
+xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
