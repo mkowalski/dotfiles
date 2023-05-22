@@ -25,7 +25,7 @@
         ff = true
 {{- if .gpgkey.sign }}
 [gpg]
-	program = gpg
+	    program = gpg
 [commit]
         gpgsign = true
 {{- end }}
@@ -37,3 +37,10 @@
         ff = only
 [gitreview]
         username = makowals
+{{ if eq .chezmoi.hostname "Matt-X1N" -}}
+[init]
+        templateDir = /home/kmateusz/.git-template
+[rh-pre-commit]
+        checkSecrets = true
+{{- end -}}
+
