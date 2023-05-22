@@ -187,13 +187,14 @@ mode $displayMode {
 }
 
 # Create bindings for power management
-set $powerMode "[s]leep [h]ibernate [l]ock [w]indows | [m]ouse"
+#set $powerMode "[s]leep [h]ibernate [l]ock | [m]ouse"
+set $powerMode "[h]ibernate [l]ock | [m]ouse"
 bindsym $mod+x mode $powerMode
 mode $powerMode {
-    bindsym s mode "default"; exec "autorandr -l default && systemctl suspend"
+    #bindsym s mode "default"; exec "autorandr -l default && systemctl suspend"
     bindsym h mode "default"; exec "autorandr -l default && systemctl hibernate"
     bindsym l mode "default"; exec ~/bin/lock-wrapper 15:1
-    bindsym w mode "default"; exec "sudo efibootmgr --bootnext 0000 && autorandr -l default && systemctl hibernate"
+    #bindsym w mode "default"; exec "sudo efibootmgr --bootnext 002C && autorandr -l default && systemctl hibernate"
     bindsym m mode "default"; exec ~/bin/logitech-mouse-configure
 
     bindsym Return mode "default"
@@ -213,11 +214,13 @@ mode $tempMode {
 }
 
 # Create bindings for camera
-set $camMode "Camera [t]une [r]eset"
+set $camMode "Camera [t]une [r]eset | WF-1000XM4 [a]2dp-ldac [h]eadset-msbc"
 bindsym $mod+Shift+c mode $camMode
 mode $camMode {
     bindsym t mode "default"; exec "bash ~/.config/i3/scripts/logitech-camera.sh camera_tune"
     bindsym r mode "default"; exec "bash ~/.config/i3/scripts/logitech-camera.sh camera_reset"
+    bindsym a mode "default"; exec "pactl set-card-profile bluez_card.88_C9_E8_C7_4E_7B a2dp-sink-ldac"
+    bindsym h mode "default"; exec "pactl set-card-profile bluez_card.88_C9_E8_C7_4E_7B headset-head-unit-msbc"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"

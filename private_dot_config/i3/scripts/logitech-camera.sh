@@ -1,6 +1,6 @@
 # Fix webcam focus / exposure
 
-EXTERNAL_CAM=video4
+EXTERNAL_CAM=video2
 
 function fixcam_omer {
   v4l2-ctl -d /dev/video0 --set-ctrl=focus_auto=0
