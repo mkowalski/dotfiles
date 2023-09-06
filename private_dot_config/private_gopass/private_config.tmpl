@@ -1,0 +1,20 @@
+[core]
+  autoclip = true
+  autoimport = true
+  cliptimeout = 45
+  exportkeys = true
+  nocolor = false
+  nopager = false
+  notifications = true
+  showsafecontent = true
+{{ if eq .chezmoi.hostname "Matt-MBA" -}}
+[mounts]
+  path = /Users/mko/.password-store-private
+[mounts "redhat"]
+  path = /Users/mko/.password-store-redhat
+{{ else if eq .chezmoi.hostname "Matt-X1N" -}}
+[mounts]
+  path = /Users/mko/.password-store-redhat
+[mounts "private"]
+  path = /Users/mko/.password-store-private
+{{- end -}}
