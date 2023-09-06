@@ -1,4 +1,7 @@
+{{ if eq .chezmoi.os "linux" -}}
 disable-ccid
 pcsc-shared
 pcsc-driver /usr/lib64/libpcsclite.so.1
 disable-application piv
+{{ else if eq .chezmoi.os "darwin" -}}
+{{ end -}}
