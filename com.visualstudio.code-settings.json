@@ -45,7 +45,7 @@
     "yaml.schemas": {
 
     },
-    "editor.fontFamily": "'Source Code Pro'",
+    "editor.fontFamily": "'Red Hat Mono'",
     "files.trimTrailingWhitespace": true,
     "files.trimFinalNewlines": true,
     "githubPullRequests.remotes": [
@@ -82,5 +82,10 @@
     "[rust]": {
         "editor.defaultFormatter": "rust-lang.rust-analyzer",
         "editor.formatOnSave": true,
+    },
+    "[go][go.mod]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
     }
 }
