@@ -1,6 +1,6 @@
 # Fix webcam focus / exposure
 
-EXTERNAL_CAM=video2
+EXTERNAL_CAM=video4
 
 function fixcam_omer {
   v4l2-ctl -d /dev/video0 --set-ctrl=focus_auto=0
@@ -13,6 +13,13 @@ function camera_tune {
   v4l2-ctl --device=/dev/$EXTERNAL_CAM --set-ctrl sharpness=150
   v4l2-ctl --device=/dev/$EXTERNAL_CAM --set-ctrl backlight_compensation=1
   v4l2-ctl --device=/dev/$EXTERNAL_CAM --set-ctrl tilt_absolute=-36000
+}
+
+function camera_tune2 {
+  v4l2-ctl --device=/dev/$EXTERNAL_CAM --set-ctrl zoom_absolute=135
+  v4l2-ctl --device=/dev/$EXTERNAL_CAM --set-ctrl sharpness=150
+  v4l2-ctl --device=/dev/$EXTERNAL_CAM --set-ctrl backlight_compensation=1
+  v4l2-ctl --device=/dev/$EXTERNAL_CAM --set-ctrl tilt_absolute=-10000
 }
 
 function camera_reset {

@@ -37,10 +37,11 @@
         ff = only
 [gitreview]
         username = makowals
-{{ if eq .chezmoi.hostname "Matt-X1N" -}}
+{{ if eq .chezmoi.hostname "Matt-X1C" -}}
 [init]
         templateDir = /home/kmateusz/.git-template
 [rh-pre-commit]
         checkSecrets = true
+        enableLocalConfig = false
 {{- end -}}
 
