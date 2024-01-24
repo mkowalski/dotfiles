@@ -16,12 +16,18 @@ export NAME='TPPS/2 Elan TrackPoint'
 xinput set-prop "$NAME" "libinput Accel Speed" 0.6
 xinput set-prop "$NAME" "libinput Natural Scrolling Enabled" 1
 
-export NAME='ELAN0670:00 04F3:3150 Touchpad'
+export NAME='SYNA8017:00 06CB:CEB2 Touchpad'
 xinput set-prop "$NAME" 'libinput Natural Scrolling Enabled' 1
 xinput set-prop "$NAME" 'libinput Accel Speed' 0.8
 xinput set-prop "$NAME" 'libinput Tapping Enabled' 1
 
 export NAME='MX Ergo'
+xinput set-prop "$NAME" 'libinput Natural Scrolling Enabled' 1
+xinput set-prop "$NAME" 'libinput Accel Speed' 1
+xinput set-prop "$NAME" 'libinput Accel Profile Enabled' 1, 0
+xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
+
+export NAME='Logitech MX Ergo Multi-Device Trackball '
 xinput set-prop "$NAME" 'libinput Natural Scrolling Enabled' 1
 xinput set-prop "$NAME" 'libinput Accel Speed' 1
 xinput set-prop "$NAME" 'libinput Accel Profile Enabled' 1, 0

@@ -1,11 +1,13 @@
 #!/usr/bin/bash
+set -e
 
 OTP_NAME="TOTP21406966"
 GOPASS_OTPCLIENT="corporate/pin/${OTP_NAME}"
 GOPASS_PIN="corporate/pin/oathtool"
 NM_VPN="Red Hat Global VPN"
 
-TOKEN=$(oathtool -b --totp $(gopass -f ${GOPASS_OTPCLIENT}))
+OTPPIN=$(gopass -f ${GOPASS_OTPCLIENT})
+TOKEN=$(oathtool -b --totp ${OTPPIN})
 PIN=$(gopass -f ${GOPASS_PIN})
 PASSWORD=${PIN}${TOKEN}
 
