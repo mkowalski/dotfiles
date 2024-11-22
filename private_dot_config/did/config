@@ -1,0 +1,19 @@
+[general]
+email = Mat Kowalski <mko@redhat.com>
+width = 250
+quarter = 1
+separator = #
+separator_width = 20
+
+[github]
+type = github
+url = https://api.github.com/
+token_file = ~/.config/did/github_token
+login = mkowalski
+
+[issues]
+type = jira
+url = https://issues.redhat.com/
+login = mkowalsk@redhat.com
+auth_type = token
+token_file = ~/.config/did/jira_token
