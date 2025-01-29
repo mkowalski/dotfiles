@@ -33,6 +33,10 @@
         lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
         lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
         lg = !"git lg1"
+        staash = stash --all
+        blaame = blame -w -C -C -C
+        ffetch = fetch --refmap= upstream +refs/pull/*:refs/remotes/upstream/pull/*
+        fetchpr = "!f() { git fetch --refmap=+refs/pull/*/merge:refs/remotes/upstream/pr/* upstream refs/pull/$1/head; }; f"
 [pull]
         ff = only
 [gitreview]
@@ -43,5 +47,18 @@
 [rh-pre-commit]
         checkSecrets = true
         enableLocalConfig = false
-{{- end -}}
-
+[maintenance]
+        repo = /home/kmateusz/git/github.com/kubernetes
+        repo = /home/kmateusz/git/github.com/openshift-release
+        repo = /home/kmateusz/git/github.com/dev-scripts
+        repo = /home/kmateusz/git/github.com/installer
+        repo = /home/kmateusz/git/github.com/kubernetes-nmstate
+        repo = /home/kmateusz/git/github.com/machine-config-operator
+        repo = /home/kmateusz/git/github.com/metal3-dev-env
+        repo = /home/kmateusz/git/github.com/openshift-api
+        repo = /home/kmateusz/git/github.com/openshift-enhancements
+{{- end }}
+[rerere]
+        enabled = true
+[fetch]
+        writeCommitGraph = true

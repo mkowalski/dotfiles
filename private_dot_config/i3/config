@@ -194,7 +194,9 @@ bindsym $mod+x mode $powerMode
 mode $powerMode {
     bindsym s mode "default"; exec "autorandr -l default && systemctl suspend"
     bindsym h mode "default"; exec "autorandr -l default && systemctl hibernate"
-    bindsym l mode "default"; exec ~/bin/lock-wrapper 15:1
+    #bindsym l mode "default"; exec ~/bin/lock-wrapper 15:1
+    bindsym l mode "default"; exec xset s activate
+    # bindsym l mode "default"; exec "XSECURELOCK_SAVER=/home/kmateusz/bin/lock-wrapper-2 XSECURELOCK_SHOW_HOSTNAME=0 XSECURELOCK_SHOW_USERNAME=0 XSECURELOCK_SHOW_KEYBOARD_LAYOUT=0 xsecurelock"
     #bindsym w mode "default"; exec "sudo efibootmgr --bootnext 002C && autorandr -l default && systemctl hibernate"
     bindsym m mode "default"; exec ~/bin/logitech-mouse-configure
 
@@ -223,8 +225,8 @@ mode $camMode {
     bindsym r mode "default"; exec "bash ~/.config/i3/scripts/logitech-camera.sh camera_reset"
     bindsym a mode "default"; exec "pactl set-card-profile bluez_card.88_C9_E8_C7_4E_7B a2dp-sink-ldac"
     bindsym h mode "default"; exec "pactl set-card-profile bluez_card.88_C9_E8_C7_4E_7B headset-head-unit-msbc"
-    bindsym m mode "default"; exec "lc on bright 100 temp 6500"
-    bindsym n mode "default"; exec "lc on bright 50 temp 6500"
+    bindsym m mode "default"; exec "lc on bright 100 temp 4000"
+    bindsym n mode "default"; exec "lc on bright 50 temp 4000"
     bindsym b mode "default"; exec "lc off"
 
     bindsym Return mode "default"
@@ -328,3 +330,6 @@ exec --no-startup-id pactl load-module module-switch-on-connect
 # Additional bindings
 # bindsym XF86Favorites exec amixer -q set Capture toggle
 bindsym XF86Display exec autorandr -l default
+
+# Allow xsecurelock to get events from lock&co.
+exec --no-startup-id xss-lock -n /usr/lib/xsecurelock/dimmer -l -- env XSECURELOCK_SAVER=/home/kmateusz/bin/lock-wrapper-2 XSECURELOCK_SHOW_HOSTNAME=0 XSECURELOCK_SHOW_USERNAME=0 XSECURELOCK_SHOW_KEYBOARD_LAYOUT=0 xsecurelock

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export NAME='MX Master 2S Mouse'
+export NAME='pointer:Logitech Wireless Mouse MX Master 2S'
 xinput set-prop "$NAME" "libinput Natural Scrolling Enabled" 1
 xinput set-prop "$NAME" "libinput Accel Speed" 1
 xinput set-prop "$NAME" 'libinput Accel Profile Enabled' 0, 1
@@ -32,3 +32,4 @@ xinput set-prop "$NAME" 'libinput Natural Scrolling Enabled' 1
 xinput set-prop "$NAME" 'libinput Accel Speed' 1
 xinput set-prop "$NAME" 'libinput Accel Profile Enabled' 1, 0
 xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
+
