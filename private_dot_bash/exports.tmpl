@@ -9,7 +9,11 @@ export HISTCONTROL='ignoreboth';
 if ! [ -f /run/.containerenv ] || ! [ -f /run/.toolboxenv ]; then
     # Gopass specific config
     export GPG_TTY=$(tty)
+    {{ if eq .chezmoi.os "darwin" -}}
+    source <(gopass completion zsh)
+    {{ else if eq .chezmoi.os "linux" -}}
     source <(gopass completion bash)
+{{ end }}
 fi
 
 # GPG support
