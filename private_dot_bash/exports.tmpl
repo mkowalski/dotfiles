@@ -9,17 +9,22 @@ export HISTCONTROL='ignoreboth';
 if ! [ -f /run/.containerenv ] || ! [ -f /run/.toolboxenv ]; then
     # Gopass specific config
     export GPG_TTY=$(tty)
+    {{ if eq .chezmoi.os "darwin" -}}
+    source <(/opt/homebrew/bin/gopass completion zsh)
+    {{ else if eq .chezmoi.os "linux" -}}
     source <(gopass completion bash)
+{{ end }}
 fi
 
 # GPG support
 export GPG_TTY=$(/usr/bin/tty)
 {{ if eq .chezmoi.os "darwin" -}}
 export SSH_AUTH_SOCK="$HOME/.gnupg/S.gpg-agent.ssh"
+/opt/homebrew/bin/gpg-connect-agent updatestartuptty /bye > /dev/null
 {{ else if eq .chezmoi.os "linux" -}}
 export SSH_AUTH_SOCK=/run/user/1000/gnupg/S.gpg-agent.ssh
-{{ end -}}
 gpg-connect-agent updatestartuptty /bye > /dev/null
+{{ end -}}
 
 # Use libvirt with Vagrant
 #export VAGRANT_DEFAULT_PROVIDER=libvirt

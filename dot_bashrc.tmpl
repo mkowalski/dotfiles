@@ -4,9 +4,15 @@
 {{ end -}}
 
 # Source global definitions
+{{ if eq .chezmoi.os "linux" -}}
 if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
+{{ else if eq .chezmoi.os "darwin" -}}
+if [ -f /etc/zshrc ]; then
+    . /etc/zshrc
+fi
+{{ end -}}
 
 # Load the shell dotfiles
 for file in ~/.bash/*; do
@@ -16,16 +22,15 @@ unset file;
 
 {{ if eq .chezmoi.os "darwin" -}}
 # Load base bash completions
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
+if [ -f $(/opt/homebrew/bin/brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
-# Load bash completions for gopass
-source /dev/stdin <<<"$(gopass completion bash)"
-
 # Load iTerm2 integration
-source ~/.iterm2_shell_integration.bash
+if [ -f ~/.iterm2_shell_integration.bash ]; then
+    source ~/.iterm2_shell_integration.bash
+fi
 
 {{ else if eq .chezmoi.os "linux" -}}
 if [ -f /usr/bin/direnv ]; then
