@@ -1,6 +1,5 @@
 #!/bin/bash
 
 sleep 2
-nitrogen --set-scaled --head=0 "/home/kmateusz/Red Hat/Wallpapers-20210510T214316Z-001/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png"
-nitrogen --set-scaled --head=1 "/home/kmateusz/Red Hat/Wallpapers-20210510T214316Z-001/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png"
-
+nitrogen --set-scaled --head=0 "/home/kmateusz/RHT/001-corporate/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png"
+nitrogen --set-scaled --head=1 "/home/kmateusz/RHT/001-corporate/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png"
