@@ -177,23 +177,26 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Create bindings for screen layouts
-set $displayMode "Set display mode [a]utomatic [l]aptop"
+set $displayMode "Set display mode [a]utomatic [l]aptop | split [1] 100% [2] 50/50 [3] 35/65"
 bindsym $mod+Shift+x mode $displayMode
 mode $displayMode {
     bindsym l exec autorandr --load default; mode "default"
     bindsym a exec autorandr --change; mode "default"
+    bindsym 1 exec "xrandr --delmonitor LEFT --delmonitor RIGHT"; mode "default";
+    # Remember the same config is in the postswitch of autorandr
+    bindsym 2 exec "xrandr --delmonitor LEFT --delmonitor RIGHT"; exec "xrandr --setmonitor LEFT 2560/0x2160/0+0+0 DP-3 --setmonitor RIGHT 2560/0x2160/0+2560+0 DP-3 --output DP-3 --mode 5120x2160 --primary"; mode "default";
+    bindsym 3 exec "xrandr --delmonitor LEFT --delmonitor RIGHT"; exec "xrandr --setmonitor LEFT 1792/0x2160/0+0+0 DP-3 --setmonitor RIGHT 3328/0x2160/0+1792+0 DP-3 --output DP-3 --mode 5120x2160 --primary"; mode "default";
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
 # Create bindings for power management
-set $powerMode "[s]leep [h]ibernate [l]ock | [m]ouse"
+set $powerMode "[s]leep [l]ock | [m]ouse"
 #set $powerMode "[h]ibernate [l]ock | [m]ouse"
 bindsym $mod+x mode $powerMode
 mode $powerMode {
     bindsym s mode "default"; exec "autorandr -l default && systemctl suspend"
-    bindsym h mode "default"; exec "autorandr -l default && systemctl hibernate"
     #bindsym l mode "default"; exec ~/bin/lock-wrapper 15:1
     bindsym l mode "default"; exec xset s activate
     # bindsym l mode "default"; exec "XSECURELOCK_SAVER=/home/kmateusz/bin/lock-wrapper-2 XSECURELOCK_SHOW_HOSTNAME=0 XSECURELOCK_SHOW_USERNAME=0 XSECURELOCK_SHOW_KEYBOARD_LAYOUT=0 xsecurelock"
@@ -217,14 +220,17 @@ mode $tempMode {
 }
 
 # Create bindings for camera
-set $camMode "Camera [t]une1 t[u]ne2 [r]eset | WF-1000XM4 [a]2dp-ldac [h]eadset-msbc | Litra Glow [m]ax [n]half [b]off"
+set $camMode "Camera se[t] zoom[1] zoom[2] [r]eset | WF-1000XM4 [a]2dp-ldac [h]eadset-msbc | Litra Glow [m]ax [n]half [b]off"
 bindsym $mod+Shift+c mode $camMode
 mode $camMode {
-    bindsym t mode "default"; exec "bash ~/.config/i3/scripts/logitech-camera.sh camera_tune"
-    bindsym u mode "default"; exec "bash ~/.config/i3/scripts/logitech-camera.sh camera_tune2"
-    bindsym r mode "default"; exec "bash ~/.config/i3/scripts/logitech-camera.sh camera_reset"
+    bindsym t mode "default"; exec "bash ~/.config/i3/scripts/logitech-camera.sh set"
+    bindsym 1 mode "default"; exec "bash ~/.config/i3/scripts/logitech-camera.sh zoom_1"
+    bindsym 2 mode "default"; exec "bash ~/.config/i3/scripts/logitech-camera.sh zoom_2"
+    bindsym r mode "default"; exec "bash ~/.config/i3/scripts/logitech-camera.sh reset"
+
     bindsym a mode "default"; exec "pactl set-card-profile bluez_card.88_C9_E8_C7_4E_7B a2dp-sink-ldac"
     bindsym h mode "default"; exec "pactl set-card-profile bluez_card.88_C9_E8_C7_4E_7B headset-head-unit-msbc"
+
     bindsym m mode "default"; exec "lc on bright 100 temp 4000"
     bindsym n mode "default"; exec "lc on bright 50 temp 4000"
     bindsym b mode "default"; exec "lc off"
@@ -238,19 +244,48 @@ exec --no-startup-id xinput set-prop 'Elan Touchpad' 'libinput Natural Scrolling
 exec --no-startup-id xinput set-prop 'Elan Touchpad' 'libinput Accel Speed' 0.8
 exec --no-startup-id xinput set-prop 'Elan Touchpad' 'libinput Tapping Enabled' 1
 
+# Color profile management
+# exec --no-startup-id /usr/bin/xiccd
+
+# Import env so that git-maintenance has access to gpg key
+# systemctl --user status git-maintenance@hourly
+#exec --no-startup-id systemctl --user import-environment
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+    output RIGHT
+    output primary
     status_command exec ~/bin/i3-bar
+    tray_output RIGHT
     tray_output primary
-    #font pango:Source Sans Pro 10
     font pango:Sans-Serif 11
-    separator_symbol "│"
+    separator_symbol " │ "
 colors {
     background #000000
     statusline #FFFFFF
     separator  #666666
+    focused_workspace  #4C7899 #285577 #FFFFFF
+    active_workspace   #333333 #222222 #FFFFFF
+    inactive_workspace #333333 #222222 #888888
+    urgent_workspace   #2F343A #900000 #FFFFFF
+    binding_mode       #2F343A #900000 #FFFFFF
+  }
+}
 
+bar {
+    output LEFT
+    # ThinkVision 14
+    output DP-3
+    tray_output RIGHT
+    tray_output primary
+    status_command nop
+    font pango:Sans-Serif 11
+    separator_symbol " │ "
+colors {
+    background #000000
+    statusline #FFFFFF
+    separator  #666666
     focused_workspace  #4C7899 #285577 #FFFFFF
     active_workspace   #333333 #222222 #FFFFFF
     inactive_workspace #333333 #222222 #888888
@@ -288,16 +323,14 @@ bindsym XF86MonBrightnessUp exec "light -A 10; notify-send 'brightness up'"
 bindsym XF86MonBrightnessDown exec "light -U 10; notify-send 'brightness down'"
 
 # Assign apps to workspaces
-for_window [class="Thunderbird"] move to workspace 10
 for_window [class="Slack"] move to workspace 9
+for_window [class="Thunderbird"] move to workspace 10
 for_window [class="Spotify"] move to workspace 12
-for_window [class="Element"] move to workspace 8
 
 # Assign workspaces to screens
-workspace "9" output DP-1-1
-workspace "10" output DP-1-1
-workspace "8" output DP-1-1
-workspace "12" output DP-1-1
+workspace "9" output LEFT
+workspace "10" output RIGHT
+workspace "12" output LEFT
 
 # Move workspaces between screens
 bindsym $mod+greater move workspace to output right
