@@ -27,6 +27,8 @@ if xrandr --listmonitors | grep -Fq "$EXPECTED_STATUS"; then
     # Remember the same config is in i3 config file
     # xrandr --setmonitor LEFT 2560/0x2160/0+0+0 DP-3 --setmonitor RIGHT 2560/0x2160/0+2560+0 DP-3 --output DP-3 --mode 5120x2160 --primary
     xrandr --setmonitor LEFT 1792/0x2160/0+0+0 DP-3 --setmonitor RIGHT 3328/0x2160/0+1792+0 DP-3 --output DP-3 --mode 5120x2160 --primary
+    sleep 1
+    xrandr -r 120
 else
     xrandr --delmonitor LEFT --delmonitor RIGHT
 fi

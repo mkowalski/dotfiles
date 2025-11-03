@@ -184,8 +184,8 @@ mode $displayMode {
     bindsym a exec autorandr --change; mode "default"
     bindsym 1 exec "xrandr --delmonitor LEFT --delmonitor RIGHT"; mode "default";
     # Remember the same config is in the postswitch of autorandr
-    bindsym 2 exec "xrandr --delmonitor LEFT --delmonitor RIGHT"; exec "xrandr --setmonitor LEFT 2560/0x2160/0+0+0 DP-3 --setmonitor RIGHT 2560/0x2160/0+2560+0 DP-3 --output DP-3 --mode 5120x2160 --primary"; mode "default";
-    bindsym 3 exec "xrandr --delmonitor LEFT --delmonitor RIGHT"; exec "xrandr --setmonitor LEFT 1792/0x2160/0+0+0 DP-3 --setmonitor RIGHT 3328/0x2160/0+1792+0 DP-3 --output DP-3 --mode 5120x2160 --primary"; mode "default";
+    bindsym 2 exec "xrandr --delmonitor LEFT --delmonitor RIGHT"; exec "xrandr --setmonitor LEFT 2560/0x2160/0+0+0 DP-3 --setmonitor RIGHT 2560/0x2160/0+2560+0 DP-3 --output DP-3 --mode 5120x2160 --primary"; exec "sleep 1; xrandr -r 120"; mode "default";
+    bindsym 3 exec "xrandr --delmonitor LEFT --delmonitor RIGHT"; exec "xrandr --setmonitor LEFT 1792/0x2160/0+0+0 DP-3 --setmonitor RIGHT 3328/0x2160/0+1792+0 DP-3 --output DP-3 --mode 5120x2160 --primary"; exec "sleep 1; xrandr -r 120"; mode "default";
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
