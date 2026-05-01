@@ -42,3 +42,6 @@ id_ed25519
 
 # Skipper configuration
 skipper.yaml
+
+# AI assistants
+.claude/settings.local.json

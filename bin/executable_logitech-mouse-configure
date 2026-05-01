@@ -4,13 +4,13 @@ export NAME='pointer:Logitech Wireless Mouse MX Master 2S'
 xinput set-prop "$NAME" "libinput Natural Scrolling Enabled" 1
 xinput set-prop "$NAME" "libinput Accel Speed" 1
 xinput set-prop "$NAME" 'libinput Accel Profile Enabled' 0, 1
-xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
+#xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
 
 export NAME='MX Anywhere 2 Mouse'
 xinput set-prop "$NAME" "libinput Natural Scrolling Enabled" 1
 xinput set-prop "$NAME" "libinput Accel Speed" 1
 xinput set-prop "$NAME" 'libinput Accel Profile Enabled' 0, 1
-xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
+#xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
 
 export NAME='TPPS/2 Elan TrackPoint'
 xinput set-prop "$NAME" "libinput Accel Speed" 0.6
@@ -25,11 +25,13 @@ export NAME='MX Ergo'
 xinput set-prop "$NAME" 'libinput Natural Scrolling Enabled' 1
 xinput set-prop "$NAME" 'libinput Accel Speed' 1
 xinput set-prop "$NAME" 'libinput Accel Profile Enabled' 1, 0
-xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
+#xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 1 0 0 0 1 0 0 0 1
+#xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
 
 export NAME='Logitech MX Ergo Multi-Device Trackball '
 xinput set-prop "$NAME" 'libinput Natural Scrolling Enabled' 1
 xinput set-prop "$NAME" 'libinput Accel Speed' 1
 xinput set-prop "$NAME" 'libinput Accel Profile Enabled' 1, 0
-xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
+#xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 1 0 0 0 1 0 0 0 1
+#xinput set-prop "$NAME" 'Coordinate Transformation Matrix' 2 0 0 0 2 0 0 0 1
 
