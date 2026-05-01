@@ -1,0 +1,21 @@
+
+[cursor.style]
+blinking = "On"
+
+[font]
+size = 14.0
+#size = 15.0
+
+[font.normal]
+family = "Red Hat Mono"
+
+[selection]
+save_to_clipboard = true
+
+[window]
+dynamic_title = true
+
+[general]
+live_config_reload = true
+#import = ["/home/kmateusz/.config/alacritty/themes/themes/solarized_light.toml"]
+import = ["/home/kmateusz/.config/alacritty/themes/themes/solarized_dark.toml"]
