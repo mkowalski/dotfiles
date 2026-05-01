@@ -53,13 +53,13 @@ input "1133:16500:MX_Anywhere_2_Mouse" {
 # Logitech MX Ergo Trackball
 input "1133:16505:MX_Ergo" {
     natural_scroll enabled
-    accel_profile adaptive
+    accel_profile flat
     pointer_accel 1.0
 }
 
-input "1133:45085:Logitech_MX_Ergo_Multi-Device_Trackball_" {
+input "1133:45085:Logitech_MX_Ergo_Multi-Device_Trackball" {
     natural_scroll enabled
-    accel_profile adaptive
+    accel_profile flat
     pointer_accel 1.0
 }
 
@@ -200,10 +200,10 @@ bindsym $mod+Shift+minus exec echo -e "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12" \
     | xargs -I{} swaymsg move container to workspace number {}
 
 # Move workspaces between outputs
-bindsym $mod+greater move workspace to output right
-bindsym $mod+Shift+greater move workspace to output up
-bindsym $mod+less move workspace to output left
-bindsym $mod+Shift+less move workspace to output down
+bindsym $mod+period move workspace to output right
+#bindsym $mod+Shift+greater move workspace to output up
+bindsym $mod+comma move workspace to output left
+#bindsym $mod+Shift+less move workspace to output down
 
 #
 # Session Management
