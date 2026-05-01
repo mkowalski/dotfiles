@@ -3,7 +3,7 @@
     "output": "DP-5",
     "layer": "top",
     "position": "bottom",
-    "height": 28,
+    "height": 44,
 
     "modules-left": [
         "sway/workspaces",
@@ -24,7 +24,7 @@
     "output": "DP-6",
     "layer": "top",
     "position": "bottom",
-    "height": 28,
+    "height": 44,
 
     "modules-left": [
         "sway/workspaces",
@@ -134,7 +134,7 @@
     },
 
     "tray": {
-        "icon-size": 16,
+        "icon-size": 24,
         "spacing": 8
     },
 

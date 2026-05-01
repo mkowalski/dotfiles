@@ -29,7 +29,8 @@ profile home-lid-open {
 profile home-virtual-lid-closed {
     output DP-5 mode 1280x2160@120Hz position 0,0
     # Because of factor 1.25 there is a shift in position. Use arandr to confirm the correct one
-    output DP-6 mode 3840x2160@120Hz position 1024,0
+    #output DP-6 mode 3840x2160@120Hz position 1024,0
+    output DP-6 mode 3840x2160@120Hz position 1280,0
     output eDP-1 disable
 }
 

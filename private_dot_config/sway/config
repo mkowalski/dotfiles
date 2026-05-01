@@ -73,7 +73,9 @@ input "1133:45085:Logitech_MX_Ergo_Multi-Device_Trackball" {
 output * bg "/home/kmateusz/RHT/001-corporate/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png" fill
 
 # Dell U4025QW ultrawide
-output "Dell Inc. DELL U4025QW 3FZV384" scale 1.25
+# Instead of scale here, use "gsettings get org.gnome.desktop.interface text-scaling-factor"
+# Otherwise fractional scaling works really bad
+output "Dell Inc. DELL U4025QW 3FZV384" scale 1.0
 
 #
 # Key Bindings - Basics
