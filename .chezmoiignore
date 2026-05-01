@@ -6,6 +6,10 @@ com.visualstudio.code-settings.json
 .config/Code
 .config/dunst
 .config/i3
+.config/sway
+.config/kanshi
+.config/waybar
+.config/swaylock
 {{- end }}
 
 {{- if ne .chezmoi.os "darwin" }}

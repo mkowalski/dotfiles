@@ -1,0 +1,31 @@
+# swaylock configuration
+# Replaces xsecurelock settings from i3 config
+
+# Don't show hostname, username, or keyboard layout
+# (matches XSECURELOCK_SHOW_HOSTNAME=0, XSECURELOCK_SHOW_USERNAME=0,
+#  XSECURELOCK_SHOW_KEYBOARD_LAYOUT=0)
+
+# Appearance
+color=000000
+inside-color=00000088
+ring-color=285577
+key-hl-color=4c7899
+bs-hl-color=900000
+separator-color=666666
+
+inside-clear-color=dddd6688
+ring-clear-color=dddd66
+inside-ver-color=28557788
+ring-ver-color=285577
+inside-wrong-color=90000088
+ring-wrong-color=dd6666
+
+text-color=ffffff
+text-clear-color=ffffff
+text-ver-color=ffffff
+text-wrong-color=ffffff
+
+# Behaviour
+daemonize
+ignore-empty-password
+show-failed-attempts

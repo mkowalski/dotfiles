@@ -189,11 +189,11 @@
     # Always run rule-defined scripts, even if the notification is suppressed
     always_run_script = true
 
-    # Define the title of the windows spawned by dunst
-    title = Dunst
+    # Define the title of the windows spawned by dunst (X11 only, ignored on Wayland)
+    # title = Dunst
 
-    # Define the class of the windows spawned by dunst
-    class = Dunst
+    # Define the class of the windows spawned by dunst (X11 only, ignored on Wayland)
+    # class = Dunst
 
     # Print a notification on startup.
     # This is mainly for error detection, since dbus (re-)starts dunst
@@ -219,14 +219,8 @@
     ### Legacy
 
     # Use the Xinerama extension instead of RandR for multi-monitor support.
-    # This setting is provided for compatibility with older nVidia drivers that
-    # do not support RandR and using it on systems that support RandR is highly
-    # discouraged.
-    #
-    # By enabling this setting dunst will not be able to detect when a monitor
-    # is connected or disconnected which might break follow mode if the screen
-    # layout changes.
-    force_xinerama = false
+    # X11 only - not applicable on Wayland.
+    # force_xinerama = false
 
     ### mouse
 
@@ -251,27 +245,11 @@
     # where there are multiple screens with very different dpi values.
     per_monitor_dpi = false
 
-[shortcuts]
-
-    # Shortcuts are specified as [modifier+][modifier+]...key
-    # Available modifiers are "ctrl", "mod1" (the alt-key), "mod2",
-    # "mod3" and "mod4" (windows-key).
-    # Xev might be helpful to find names for keys.
-
-    # Close notification.
-    close = ctrl+space
-
-    # Close all notifications.
-    close_all = ctrl+shift+space
-
-    # Redisplay last message(s).
-    # On the US keyboard layout "grave" is normally above TAB and left
-    # of "1". Make sure this key actually exists on your keyboard layout,
-    # e.g. check output of 'xmodmap -pke'
-    history = ctrl+grave
-
-    # Context menu.
-    context = ctrl+shift+period
+# [shortcuts] section removed - X11 key grabbing does not work on Wayland.
+# Equivalent keybindings are configured in sway config using dunstctl:
+#   bindsym Control+space exec dunstctl close
+#   bindsym Control+Shift+space exec dunstctl close-all
+#   bindsym Control+grave exec dunstctl history-pop
 
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.

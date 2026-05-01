@@ -1,0 +1,130 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 28,
+
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode"
+    ],
+    "modules-right": [
+        "bluetooth",
+        "backlight",
+        "battery",
+        "cpu",
+        "memory",
+        "network#wifi",
+        "network#ppp0",
+        "network#tun0",
+        "network#wg0",
+        "network#redhat0",
+        "tray",
+        "wireplumber",
+        "clock"
+    ],
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "format": "{name}"
+    },
+
+    "sway/mode": {
+        "format": "<span font_weight=\"bold\">{}</span>"
+    },
+
+    "bluetooth": {
+        "format": "󰂯",
+        "format-disabled": "",
+        "format-off": "",
+        "format-connected": "󰂱 {device_alias}",
+        "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+    },
+
+    "backlight": {
+        "format": "󰃟 {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"]
+    },
+
+    "battery": {
+        "states": {
+            "good": 80,
+            "warning": 30,
+            "critical": 10
+        },
+        "format": "󰁹 {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%",
+        "format-full": "󰁹 {capacity}%",
+        "tooltip-format": "{timeTo}\n{power:.1f}W"
+    },
+
+    "cpu": {
+        "format": "󰍛 {load}",
+        "interval": 5,
+        "tooltip-format": "CPU Usage: {usage}%\nLoad: {load}"
+    },
+
+    "memory": {
+        "format": "󰍛 {used:0.1f}G/{total:0.1f}G",
+        "interval": 10,
+        "tooltip-format": "Memory: {used:0.1f}G / {total:0.1f}G ({percentage}%)\nSwap: {swapUsed:0.1f}G / {swapTotal:0.1f}G"
+    },
+
+    "network#wifi": {
+        "interface": "wlp0s20f3",
+        "format-wifi": "󰖩",
+        "format-disconnected": "",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}\n↓ {bandwidthDownBits} ↑ {bandwidthUpBits}"
+    },
+
+    "network#ppp0": {
+        "interface": "ppp0",
+        "format": "󰈀 ppp0:{ipaddr}",
+        "format-disconnected": "",
+        "interval": 10
+    },
+
+    "network#tun0": {
+        "interface": "tun0",
+        "format": "󰈀 tun0:{ipaddr}",
+        "format-disconnected": "",
+        "interval": 10
+    },
+
+    "network#wg0": {
+        "interface": "wg0",
+        "format": "󰈀 wg0:{ipaddr}",
+        "format-disconnected": "",
+        "interval": 10
+    },
+
+    "network#redhat0": {
+        "interface": "redhat0",
+        "format": "󰈀 redhat0:{ipaddr}",
+        "format-disconnected": "",
+        "interval": 10
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+
+    "wireplumber": {
+        "format": "󰕾",
+        "format-muted": "󰖁",
+        "tooltip-format": "Volume: {volume}%\n{node_name}",
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    },
+
+    "clock": {
+        "format": "󰃶 󰅐 {:%a %d %b %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "on-click": "gsimplecal"
+    }
+}

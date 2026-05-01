@@ -1,0 +1,397 @@
+# Sway configuration file
+# Migrated from i3 config - see ~/.config/i3/config for X11 fallback
+# Reference: man 5 sway
+
+#
+# Variables
+#
+set $mod Mod4
+set $term alacritty
+set $menu wofi --show drun --allow-images
+
+# Font for window titles and bar fallback
+font pango:Sans-Serif 11
+
+# Enable XWayland for X11 application compatibility
+xwayland enable
+
+#
+# Input Configuration
+# Replaces xinput commands from i3 config and logitech-mouse-configure script.
+# Run 'swaymsg -t get_inputs' to find exact device identifiers on your system.
+#
+
+# Touchpad (applies to all touchpads: Elan, Synaptics, etc.)
+input type:touchpad {
+    natural_scroll enabled
+    accel_profile adaptive
+    pointer_accel 0.8
+    tap enabled
+    dwt enabled
+}
+
+# TrackPoint
+input "2:10:TPPS/2_Elan_TrackPoint" {
+    natural_scroll enabled
+    pointer_accel 0.6
+}
+
+# Logitech MX Master 2S
+input "1133:16505:Logitech_Wireless_Mouse_MX_Master_2S" {
+    natural_scroll enabled
+    accel_profile flat
+    pointer_accel 1.0
+}
+
+# Logitech MX Anywhere 2
+input "1133:16500:MX_Anywhere_2_Mouse" {
+    natural_scroll enabled
+    accel_profile flat
+    pointer_accel 1.0
+}
+
+# Logitech MX Ergo Trackball
+input "1133:16505:MX_Ergo" {
+    natural_scroll enabled
+    accel_profile adaptive
+    pointer_accel 1.0
+}
+
+input "1133:45085:Logitech_MX_Ergo_Multi-Device_Trackball_" {
+    natural_scroll enabled
+    accel_profile adaptive
+    pointer_accel 1.0
+}
+
+#
+# Output Configuration
+# Basic output config here; kanshi handles automatic profile switching.
+# Run 'swaymsg -t get_outputs' to find output identifiers on your system.
+#
+
+# Wallpaper (applied to all outputs)
+output * bg "/home/kmateusz/RHT/001-corporate/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png" fill
+
+#
+# Key Bindings - Basics
+#
+
+# Start a terminal
+bindsym $mod+Return exec $term
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Application launcher (wofi replaces rofi)
+bindsym $mod+space exec $menu
+
+# Password manager (gopass via wofi dmenu; requires wl-clipboard)
+bindsym $mod+Shift+space exec gopass ls --flat | wofi --dmenu -p "Password:" | xargs --no-run-if-empty gopass show -c
+
+# Window switcher (wofi replaces rofi -show window)
+bindsym $mod+Tab exec swaymsg -t get_tree \
+    | jq -r 'recurse(.nodes[]?, .floating_nodes[]?) | select(.type == "con" and .name != null and .pid != null) | "\(.id) \(.app_id // .window_properties.class // "?") — \(.name)"' \
+    | wofi --dmenu -p "Window:" \
+    | awk '{print $1}' \
+    | xargs -I{} swaymsg "[con_id={}]" focus
+
+# Bluetooth device management
+# Option 1: bluetuith (TUI bluetooth manager)
+bindsym $mod+b exec $term -e bluetuith
+# Option 2: If you find a wofi-bluetooth script, use that instead
+# bindsym $mod+b exec wofi-bluetooth
+
+# Drag floating windows with $mod + left mouse button
+# Resize them with $mod + right mouse button
+floating_modifier $mod normal
+
+#
+# Key Bindings - Movement
+#
+
+# Change focus (vim-style)
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# Change focus (arrow keys)
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move focused window (vim-style)
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# Move focused window (arrow keys)
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#
+# Key Bindings - Layout
+#
+
+# Split orientation
+bindsym $mod+h split h
+bindsym $mod+v split v
+
+# Fullscreen
+bindsym $mod+f fullscreen toggle
+
+# Container layout
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Focus the parent container
+bindsym $mod+a focus parent
+
+#
+# Workspaces
+#
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# Go to / move to arbitrary workspace (replaces i3-input)
+bindsym $mod+minus exec echo -e "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12" \
+    | wofi --dmenu -p "Go to workspace:" \
+    | xargs -I{} swaymsg workspace number {}
+bindsym $mod+Shift+minus exec echo -e "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12" \
+    | wofi --dmenu -p "Move to workspace:" \
+    | xargs -I{} swaymsg move container to workspace number {}
+
+# Move workspaces between outputs
+bindsym $mod+greater move workspace to output right
+bindsym $mod+Shift+greater move workspace to output up
+bindsym $mod+less move workspace to output left
+bindsym $mod+Shift+less move workspace to output down
+
+#
+# Session Management
+#
+
+# Reload configuration (same as i3)
+bindsym $mod+Shift+w reload
+# Kept for muscle memory (i3 used $mod+Shift+r for restart)
+bindsym $mod+Shift+r reload
+
+# Exit sway (replaces i3-nagbar with swaynag)
+bindsym $mod+Shift+e exec swaynag -t warning \
+    -m 'Do you really want to exit sway? This will end your Wayland session.' \
+    -B 'Yes, exit sway' 'swaymsg exit'
+
+#
+# Resize Mode
+#
+
+mode "resize" {
+    bindsym j resize shrink width 10 px or 10 ppt
+    bindsym k resize grow height 10 px or 10 ppt
+    bindsym l resize shrink height 10 px or 10 ppt
+    bindsym semicolon resize grow width 10 px or 10 ppt
+
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+bindsym $mod+r mode "resize"
+
+#
+# Display Mode
+# Simplified from i3 version: no virtual monitor splitting on Wayland.
+# kanshi handles automatic profile switching; this mode is for manual overrides.
+#
+
+set $displayMode "Set display: [l]aptop only | brightness [b]right [m]edium [d]im"
+bindsym $mod+Shift+x mode $displayMode
+mode $displayMode {
+    # Switch to laptop-only output
+    bindsym l exec "swaymsg output DP-3 disable; swaymsg output eDP-1 enable"; mode "default"
+
+    # External display brightness (DDC/CI) - works the same as X11
+    bindsym b exec ddcutil setvcp 10 100; mode "default"
+    bindsym m exec ddcutil setvcp 10 80; mode "default"
+    bindsym d exec ddcutil setvcp 10 50; mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+#
+# Power Mode
+#
+
+set $powerMode "[s]leep [l]ock"
+bindsym $mod+x mode $powerMode
+mode $powerMode {
+    bindsym s mode "default"; exec systemctl suspend
+    bindsym l mode "default"; exec swaylock -f
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+#
+# Temperature Mode (gammastep replaces redshift)
+#
+
+set $tempMode "Set temperature [a] 6500K [b] 4500K [c] 3400K"
+bindsym $mod+Shift+z mode $tempMode
+mode $tempMode {
+    bindsym a mode "default"; exec "gammastep -x && gammastep -O 6500"
+    bindsym b mode "default"; exec "gammastep -x && gammastep -O 4500"
+    bindsym c mode "default"; exec "gammastep -x && gammastep -O 3400"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+#
+# Camera / Audio / Light Mode
+# Camera (v4l2-ctl) and audio (pactl) commands are display-server agnostic.
+# Script is shared with i3 config.
+#
+
+set $camMode "Camera se[t] zoom[1] zoom[2] [r]eset | WF-1000XM4 [a]2dp-ldac [h]eadset-msbc | Litra Glow [m]ax [n]half [b]off"
+bindsym $mod+Shift+c mode $camMode
+mode $camMode {
+    bindsym t mode "default"; exec bash ~/.config/i3/scripts/logitech-camera.sh set
+    bindsym 1 mode "default"; exec bash ~/.config/i3/scripts/logitech-camera.sh zoom_1
+    bindsym 2 mode "default"; exec bash ~/.config/i3/scripts/logitech-camera.sh zoom_2
+    bindsym r mode "default"; exec bash ~/.config/i3/scripts/logitech-camera.sh reset
+
+    # Sony WF-1000XM4 Bluetooth profile switching
+    bindsym a mode "default"; exec pactl set-card-profile bluez_card.88_C9_E8_C7_4E_7B a2dp-sink-ldac
+    bindsym h mode "default"; exec pactl set-card-profile bluez_card.88_C9_E8_C7_4E_7B headset-head-unit-msbc
+
+    # Logitech Litra Glow
+    bindsym m mode "default"; exec lc on bright 100 temp 4000
+    bindsym n mode "default"; exec lc on bright 50 temp 4000
+    bindsym b mode "default"; exec lc off
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+#
+# Media / Hardware Keys
+#
+
+# Audio controls (using @DEFAULT_SINK@/@DEFAULT_SOURCE@ for PipeWire compatibility)
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Brightness controls
+bindsym XF86MonBrightnessUp exec "light -A 10; notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec "light -U 10; notify-send 'brightness down'"
+
+# XF86Display key - switch to laptop-only output
+bindsym XF86Display exec "swaymsg output DP-3 disable; swaymsg output eDP-1 enable"
+
+#
+# Screenshots (grim + slurp replace scrot)
+#
+
+bindsym $mod+Print exec grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png
+
+#
+# Window Rules
+# Wayland-native apps use app_id; XWayland apps use class.
+# Run 'swaymsg -t get_tree | jq' to find app_id/class for your apps.
+#
+
+for_window [app_id="Slack"] move to workspace 9
+for_window [class="Slack"] move to workspace 9
+for_window [app_id="thunderbird"] move to workspace 10
+for_window [class="Thunderbird"] move to workspace 10
+for_window [app_id="Spotify"] move to workspace 12
+for_window [class="Spotify"] move to workspace 12
+
+# Workspace output assignment (fallback to eDP-1 if external not connected)
+workspace "9" output DP-3 eDP-1
+workspace "10" output DP-3 eDP-1
+workspace "12" output DP-3 eDP-1
+
+#
+# Notification Controls (replaces dunst [shortcuts] section, which is X11-only)
+#
+
+bindsym Control+space exec dunstctl close
+bindsym Control+Shift+space exec dunstctl close-all
+bindsym Control+grave exec dunstctl history-pop
+
+#
+# Bar (Waybar replaces i3bar + custom Go barista binary)
+#
+
+bar {
+    swaybar_command waybar
+}
+
+#
+# Startup Applications
+#
+
+# Tray applets (nm-applet needs --indicator for Wayland tray support)
+exec nm-applet --indicator
+exec pasystray
+exec flatpak run com.nextcloud.desktopclient.nextcloud
+
+# Automatic display profile switching (replaces autorandr)
+exec_always kanshi
+
+# Idle and lock configuration (replaces xss-lock + xsecurelock + xset dpms)
+exec swayidle -w \
+    timeout 1800 'swaylock -f' \
+    timeout 1830 'swaymsg "output * power off"' \
+    resume 'swaymsg "output * power on"' \
+    before-sleep 'swaylock -f'
+
+# PipeWire/WirePlumber default device switching
+exec pactl load-module module-switch-on-connect

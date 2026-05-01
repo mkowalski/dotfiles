@@ -1,0 +1,73 @@
+# kanshi - automatic display profile switching (replaces autorandr)
+#
+# IMPORTANT: Output names (DP-3, HDMI-1, etc.) may differ between X11 and
+# Wayland, or change between reboots depending on which USB-C/TB port is used.
+#
+# For reliable matching, replace output names with description patterns:
+#   output "Dell Inc. DELL U4025QW *" mode 5120x2160@120Hz ...
+#
+# Run 'swaymsg -t get_outputs' to find exact names and descriptions.
+#
+# Profiles translated from autorandr configs in ~/.config/autorandr/
+
+# Laptop only (default fallback)
+profile default {
+    output eDP-1 mode 2240x1400@60Hz position 0,0
+}
+
+# Home - Dell U4025QW ultrawide, lid closed
+profile home-lid-closed {
+    output DP-3 mode 5120x2160@120Hz position 0,0
+}
+
+# Home - Dell U4025QW ultrawide, lid open
+# Note: original autorandr profile had eDP-1 disabled; enable it here
+# and position the laptop below the ultrawide, centered.
+profile home-lid-open {
+    output DP-3 mode 5120x2160@120Hz position 0,0
+    output eDP-1 mode 2240x1400@60Hz position 1440,2160
+}
+
+# Portable monitor (Lenovo ThinkVision 14) to the right
+profile portable-right {
+    output eDP-1 mode 2240x1400@60Hz position 0,0
+    output DP-3 mode 2240x1400@60Hz position 2240,0
+}
+
+# Office Zurich - 4K monitor above laptop
+profile office-ZRH-4k {
+    output DP-3 mode 3840x2160@60Hz position 0,0
+    output eDP-1 mode 2240x1400@60Hz position 800,2160
+}
+
+# Office London 4s213 - 3440x1440 ultrawide above laptop
+profile office-LON-4s213 {
+    output DP-3 mode 3440x1440@60Hz position 0,0
+    output eDP-1 mode 2240x1400@60Hz position 600,1440
+}
+
+# Office London 4s151 - dual 2560x1440 side-by-side above laptop
+profile office-LON-4s151 {
+    output DP-3-1 mode 2560x1440@75Hz position 0,0
+    output DP-3-8 mode 2560x1440@75Hz position 2560,0
+    output eDP-1 mode 2240x1400@60Hz position 0,1440
+}
+
+# Office Brno - dual 2560x1440 via MST hub above laptop
+profile office-BRNO-2D171 {
+    output DP-3-8 mode 2560x1440@60Hz position 0,0
+    output DP-3-1-8 mode 2560x1440@60Hz position 2560,0
+    output eDP-1 mode 2240x1400@60Hz position 160,1440
+}
+
+# Office Berlin - HDMI 1080p monitor above laptop
+profile office-BER-station-14 {
+    output HDMI-1 mode 1920x1080@60Hz position 160,0
+    output eDP-1 mode 2240x1400@60Hz position 0,1080
+}
+
+# HDMI beamer (projector) - mirrored with laptop (same position)
+profile hdmi-beamer {
+    output eDP-1 mode 1920x1080@60Hz position 0,0
+    output HDMI-1 mode 1920x1080@60Hz position 0,0
+}

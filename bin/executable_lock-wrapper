@@ -1,10 +1,17 @@
 #!/bin/bash
 
 TMPBG=/tmp/screen.png
-RES=$(xrandr | grep 'current' | sed -E 's/.*current\s([0-9]+)\sx\s([0-9]+).*/\1x\2/')
 
-# box=15:1
+if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    # Wayland: use grim for screenshot + swaylock
+    grim "$TMPBG"
+    ffmpeg -y -i "$TMPBG" -filter_complex "boxblur=15:1" "$TMPBG" -loglevel quiet
+    swaylock -i "$TMPBG"
+else
+    # X11: use ffmpeg x11grab + i3lock (original behaviour)
+    RES=$(xrandr | grep 'current' | sed -E 's/.*current\s([0-9]+)\sx\s([0-9]+).*/\1x\2/')
+    ffmpeg -f x11grab -video_size "$RES" -y -i "$DISPLAY" -filter_complex "boxblur=${1:-15}:${2:-1}" -vframes 1 "$TMPBG" -loglevel quiet
+    i3lock -i "$TMPBG" || i3lock
+fi
 
-ffmpeg -f x11grab -video_size $RES -y -i $DISPLAY -filter_complex "boxblur=$1:$2" -vframes 1 $TMPBG -loglevel quiet
-i3lock -i $TMPBG || i3lock
-rm $TMPBG
+rm -f "$TMPBG"
