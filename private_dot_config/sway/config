@@ -95,11 +95,8 @@ bindsym $mod+Tab exec swaymsg -t get_tree \
     | awk '{print $1}' \
     | xargs -I{} swaymsg "[con_id={}]" focus
 
-# Bluetooth device management
-# Option 1: bluetuith (TUI bluetooth manager)
-bindsym $mod+b exec $term -e bluetuith
-# Option 2: If you find a wofi-bluetooth script, use that instead
-# bindsym $mod+b exec wofi-bluetooth
+# Bluetooth device management (blueman-manager from the blueman package)
+bindsym $mod+b exec blueman-manager
 
 # Drag floating windows with $mod + left mouse button
 # Resize them with $mod + right mouse button
