@@ -72,6 +72,9 @@ input "1133:45085:Logitech_MX_Ergo_Multi-Device_Trackball_" {
 # Wallpaper (applied to all outputs)
 output * bg "/home/kmateusz/RHT/001-corporate/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png" fill
 
+# Dell U4025QW ultrawide
+output "Dell Inc. DELL U4025QW 3FZV384" scale 1.25
+
 #
 # Key Bindings - Basics
 #
@@ -86,7 +89,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+space exec $menu
 
 # Password manager (gopass via wofi dmenu; requires wl-clipboard)
-bindsym $mod+Shift+space exec gopass ls --flat | wofi --dmenu -p "Password:" | xargs --no-run-if-empty gopass show -c
+bindsym $mod+Shift+space exec gopass ls --flat | wofi --dmenu -p "Password:" | xargs --no-run-if-empty gopass show -o | wl-copy && notify-send "gopass" "Password copied to clipboard"
 
 # Window switcher (wofi replaces rofi -show window)
 bindsym $mod+Tab exec swaymsg -t get_tree \
@@ -374,6 +377,10 @@ bar {
 #
 # Startup Applications
 #
+
+# Export Wayland environment to systemd and D-Bus so that user services
+# (dunst, xdg-desktop-portal, etc.) can find the Wayland display.
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY
 
 # Tray applets (nm-applet needs --indicator for Wayland tray support)
 exec nm-applet --indicator

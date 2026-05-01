@@ -1,179 +1,178 @@
-/* Waybar stylesheet - migrated from i3bar color scheme */
-/* Colors from i3-bar barista blocks:
- *   dim-icon: #777777
- *   good:     #66dd66
- *   degraded: #dddd66
- *   bad:      #dd6666
- */
-
 * {
-    font-family: "Sans-Serif", "Font Awesome 6 Free", "Material Icons";
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: Roboto, Helvetica, Arial, sans-serif, "Font Awesome 6 Free", "Font Awesome 6 Brands";
     font-size: 13px;
-    min-height: 0;
 }
 
 window#waybar {
-    background-color: #000000;
+    background-color: rgba(43, 48, 59, 0.5);
+    border-bottom: 3px solid rgba(100, 114, 125, 0.5);
     color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .5s;
 }
 
-/* Remove default transitions for snappy updates */
-#workspaces button,
-#mode,
-#bluetooth,
-#backlight,
-#battery,
-#cpu,
-#memory,
-#network,
-#tray,
-#wireplumber,
-#clock {
-    padding: 0 8px;
-    margin: 0;
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+button {
+    /* Use box-shadow instead of border so the text isn't offset */
+    box-shadow: inset 0 -3px transparent;
+    /* Avoid rounded borders under each button name */
     border: none;
     border-radius: 0;
-    background-color: transparent;
-    color: #777777;
 }
 
-/* Separator between modules */
-#bluetooth,
-#backlight,
-#battery,
-#cpu,
-#memory,
-#network,
-#wireplumber,
-#clock {
-    border-left: 1px solid #666666;
+button:hover {
+    background: inherit;
+    box-shadow: inset 0 -3px #ffffff;
 }
-
-/*
- * Workspaces - matches i3bar workspace colors
- */
 
 #workspaces button {
-    color: #888888;
-    background-color: #222222;
-    border-top: 2px solid #333333;
-    border-bottom: 2px solid #333333;
-    padding: 0 6px;
-}
-
-#workspaces button.focused {
+    padding: 0 5px;
+    background-color: transparent;
     color: #ffffff;
-    background-color: #285577;
-    border-top: 2px solid #4c7899;
-    border-bottom: 2px solid #4c7899;
-}
-
-#workspaces button.visible {
-    color: #ffffff;
-    background-color: #222222;
-    border-top: 2px solid #333333;
-    border-bottom: 2px solid #333333;
-}
-
-#workspaces button.urgent {
-    color: #ffffff;
-    background-color: #900000;
-    border-top: 2px solid #2f343a;
-    border-bottom: 2px solid #2f343a;
 }
 
 #workspaces button:hover {
-    background-color: #333333;
-    box-shadow: none;
-    text-shadow: none;
+    background: rgba(0, 0, 0, 0.2);
 }
 
-/*
- * Mode indicator (resize, display, power, etc.)
- */
+#workspaces button.focused, #workspaces button.active {
+    background-color: #64727D;
+    box-shadow: inset 0 -3px #ffffff;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
 
 #mode {
+    background-color: #64727D;
+    box-shadow: inset 0 -3px #ffffff;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#bluetooth,
+#mpd {
+    padding: 0 10px;
     color: #ffffff;
-    background-color: #900000;
-    border-top: 2px solid #2f343a;
-    border-bottom: 2px solid #2f343a;
-    padding: 0 8px;
 }
 
-/*
- * Bluetooth
- */
-
-#bluetooth {
-    color: #777777;
+#window,
+#workspaces {
+    margin: 0 4px;
 }
 
-#bluetooth.connected {
-    color: #66dd66;
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
 }
 
-/*
- * Backlight (brightness)
- */
-
-#backlight {
-    color: #777777;
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
 }
 
-/*
- * Battery - color thresholds match i3-bar (critical <=10, warning <=30)
- */
+#clock {
+    background-color: #64727D;
+}
 
 #battery {
-    color: #777777;
+    background-color: #ffffff;
+    color: #000000;
 }
 
-#battery.charging {
-    color: #777777;
+#battery.charging, #battery.plugged {
+    color: #ffffff;
+    background-color: #26A65B;
 }
 
-#battery.warning:not(.charging) {
-    color: #dddd66;
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
 }
 
 #battery.critical:not(.charging) {
-    color: #dd6666;
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
-
-/*
- * CPU
- */
 
 #cpu {
-    color: #777777;
+    background-color: #2ecc71;
+    color: #000000;
 }
-
-/*
- * Memory
- */
 
 #memory {
-    color: #777777;
+    background-color: #9b59b6;
 }
 
-/*
- * Network
- */
+#disk {
+    background-color: #964B00;
+}
+
+#backlight {
+    background-color: #90b1b1;
+}
 
 #network {
-    color: #777777;
+    background-color: #2980b9;
 }
 
 #network.disconnected {
-    color: transparent;
+    background-color: #f53c3c;
 }
 
-/*
- * Tray
- */
+#pulseaudio {
+    background-color: #f1c40f;
+    color: #000000;
+}
+
+#pulseaudio.muted {
+    background-color: #90b1b1;
+    color: #2a5c45;
+}
+
+#wireplumber {
+    background-color: #fff0f5;
+    color: #000000;
+}
+
+#wireplumber.muted {
+    background-color: #f53c3c;
+}
+
+#temperature {
+    background-color: #f0932b;
+}
+
+#temperature.critical {
+    background-color: #eb4d4b;
+}
 
 #tray {
-    border-left: 1px solid #666666;
+    background-color: #2980b9;
 }
 
 #tray > .passive {
@@ -182,24 +181,38 @@ window#waybar {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
+    background-color: #eb4d4b;
 }
 
-/*
- * Volume (WirePlumber)
- */
-
-#wireplumber {
-    color: #777777;
+#bluetooth {
+    background-color: #2d3436;
 }
 
-#wireplumber.muted {
-    color: #dd6666;
+#bluetooth.connected {
+    background-color: #26A65B;
 }
 
-/*
- * Clock
- */
+label:focus {
+    background-color: #000000;
+}
 
-#clock {
-    color: #777777;
+#privacy {
+    padding: 0;
+}
+
+#privacy-item {
+    padding: 0 5px;
+    color: white;
+}
+
+#privacy-item.screenshare {
+    background-color: #cf5700;
+}
+
+#privacy-item.audio-in {
+    background-color: #1ca000;
+}
+
+#privacy-item.audio-out {
+    background-color: #0069d4;
 }

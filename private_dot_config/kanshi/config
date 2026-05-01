@@ -21,11 +21,9 @@ profile home-lid-closed {
 }
 
 # Home - Dell U4025QW ultrawide, lid open
-# Note: original autorandr profile had eDP-1 disabled; enable it here
-# and position the laptop below the ultrawide, centered.
 profile home-lid-open {
     output DP-3 mode 5120x2160@120Hz position 0,0
-    output eDP-1 mode 2240x1400@60Hz position 1440,2160
+    output eDP-1 disable
 }
 
 # Portable monitor (Lenovo ThinkVision 14) to the right
