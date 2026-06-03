@@ -13,24 +13,31 @@
 # Laptop only (default fallback)
 profile default {
     output eDP-1 mode 2240x1400@60Hz position 0,0
+    output DP-3 disable
+    output DP-5 disable
+    output DP-6 disable
 }
 
-# Home - Dell U4025QW ultrawide, lid closed
-profile home-lid-closed {
-    output DP-3 mode 5120x2160@120Hz position 0,0
+profile laptop-only {
+    output eDP-1 enable mode 2240x1400@60.021Hz position 0,0
 }
 
-# Home - Dell U4025QW ultrawide, lid open
-profile home-lid-open {
-    output DP-3 mode 5120x2160@120Hz position 0,0
-    output eDP-1 disable
-}
+# # Home - Dell U4025QW ultrawide, lid closed
+# profile home-lid-closed {
+#     output DP-3 mode 5120x2160@120Hz position 0,0
+# }
+
+# # Home - Dell U4025QW ultrawide, lid open
+# profile home-lid-open {
+#     output DP-3 mode 5120x2160@120Hz position 0,0
+#     output eDP-1 disable
+# }
 
 profile home-virtual-lid-closed {
-    output DP-5 mode 1280x2160@120Hz position 0,0
+    output DP-5 enable mode 1280x2160@120Hz position 0,0
     # Because of factor 1.25 there is a shift in position. Use arandr to confirm the correct one
     #output DP-6 mode 3840x2160@120Hz position 1024,0
-    output DP-6 mode 3840x2160@120Hz position 1280,0
+    output DP-6 enable mode 3840x2160@120Hz position 1280,0
     output eDP-1 disable
 }
 
@@ -42,28 +49,28 @@ profile portable-right {
 
 # Office Zurich - 4K monitor above laptop
 profile office-ZRH-4k {
-    output DP-3 mode 3840x2160@60Hz position 0,0
-    output eDP-1 mode 2240x1400@60Hz position 800,2160
+    output DP-3 enable mode 3840x2160@60Hz position 0,0
+    output eDP-1 enable mode 2240x1400@60Hz position 800,2160
 }
 
 # Office London 4s213 - 3440x1440 ultrawide above laptop
 profile office-LON-4s213 {
-    output DP-3 mode 3440x1440@60Hz position 0,0
-    output eDP-1 mode 2240x1400@60Hz position 600,1440
+    output DP-3 enable mode 3440x1440@60Hz position 0,0
+    output eDP-1 enable mode 2240x1400@60Hz position 600,1440
 }
 
 # Office London 4s151 - dual 2560x1440 side-by-side above laptop
 profile office-LON-4s151 {
-    output DP-3-1 mode 2560x1440@75Hz position 0,0
-    output DP-3-8 mode 2560x1440@75Hz position 2560,0
-    output eDP-1 mode 2240x1400@60Hz position 0,1440
+    output DP-3-1 enable mode 2560x1440@75Hz position 0,0
+    output DP-3-8 enable mode 2560x1440@75Hz position 2560,0
+    output eDP-1 enable mode 2240x1400@60Hz position 0,1440
 }
 
 # Office Brno - dual 2560x1440 via MST hub above laptop
 profile office-BRNO-2D171 {
-    output DP-3-8 mode 2560x1440@60Hz position 0,0
-    output DP-3-1-8 mode 2560x1440@60Hz position 2560,0
-    output eDP-1 mode 2240x1400@60Hz position 160,1440
+    output DP-3-8 enable mode 2560x1440@60Hz position 0,0
+    output DP-3-1-8 enable mode 2560x1440@60Hz position 2560,0
+    output eDP-1 enable mode 2240x1400@60Hz position 160,1440
 }
 
 # Office Berlin - HDMI 1080p monitor above laptop
@@ -74,6 +81,6 @@ profile office-BER-station-14 {
 
 # HDMI beamer (projector) - mirrored with laptop (same position)
 profile hdmi-beamer {
-    output eDP-1 mode 1920x1080@60Hz position 0,0
-    output HDMI-1 mode 1920x1080@60Hz position 0,0
+    output eDP-1 enable mode 1920x1080@60Hz position 0,0
+    output HDMI-1 enable mode 1920x1080@60Hz position 0,0
 }
