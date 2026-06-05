@@ -10,7 +10,15 @@ if ! [ -f /run/.containerenv ] || ! [ -f /run/.toolboxenv ]; then
     # Gopass specific config
     export GPG_TTY=$(tty)
     {{ if eq .chezmoi.os "darwin" -}}
-    source <(/opt/homebrew/bin/gopass completion zsh)
+    if [ -n "$ZSH_VERSION" ]; then
+        # gopass zsh completion calls compdef, so make sure the zsh completion
+        # system is initialised first (this file is sourced from ~/.bashrc,
+        # which on macOS runs before ~/.zshrc).
+        autoload -Uz compinit && compinit
+        source <(/opt/homebrew/bin/gopass completion zsh)
+    elif [ -n "$BASH_VERSION" ]; then
+        source <(/opt/homebrew/bin/gopass completion bash)
+    fi
     {{ else if eq .chezmoi.os "linux" -}}
     source <(gopass completion bash)
 {{ end }}

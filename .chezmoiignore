@@ -13,4 +13,6 @@ com.visualstudio.code-settings.json
 {{- end }}
 
 {{- if ne .chezmoi.os "darwin" }}
+.zshrc
+.zprofile
 {{- end }}

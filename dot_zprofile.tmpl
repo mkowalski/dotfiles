@@ -1,0 +1,6 @@
+# Created by `pipx` on 2024-07-22 20:37:20
+export PATH="$PATH:{{ .chezmoi.homeDir }}/.local/bin"
+
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
