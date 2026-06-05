@@ -2,9 +2,12 @@ README.md
 com.visualstudio.code-settings.json
 
 {{- if ne .chezmoi.os "linux" }}
+.config/alacritty
 .config/autorandr
 .config/Code
 .config/dunst
+.config/gtk-3.0
+.config/gtk-4.0
 .config/i3
 .config/sway
 .config/kanshi
