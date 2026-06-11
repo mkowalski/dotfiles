@@ -21,6 +21,11 @@ xwayland enable
 # Run 'swaymsg -t get_inputs' to find exact device identifiers on your system.
 #
 
+# Keyboard layout (Polish - programmer's)
+input type:keyboard {
+    xkb_layout pl
+}
+
 # Touchpad (applies to all touchpads: Elan, Synaptics, etc.)
 input type:touchpad {
     natural_scroll enabled
@@ -248,11 +253,15 @@ bindsym $mod+r mode "resize"
 # kanshi handles automatic profile switching; this mode is for manual overrides.
 #
 
-set $displayMode "Set display: [l]aptop only | brightness [b]right [m]edium [d]im"
+bindswitch --locked lid:on exec "killall -s HUP kanshi"
+bindswitch --locked lid:off exec "killall -s HUP kanshi"
+
+set $displayMode "Set display: [a]utomatic | brightness [b]right [m]edium [d]im"
 bindsym $mod+Shift+x mode $displayMode
 mode $displayMode {
+    bindsym a exec "killall -s HUP kanshi"; mode "default"
     # Switch to laptop-only output
-    bindsym l exec "swaymsg output DP-3 disable; swaymsg output eDP-1 enable"; mode "default"
+    #bindsym l exec "swaymsg output DP-3 disable; swaymsg output eDP-1 enable"; mode "default"
 
     # External display brightness (DDC/CI) - works the same as X11
     bindsym b exec ddcutil setvcp 10 100; mode "default"
@@ -311,9 +320,9 @@ mode $camMode {
     bindsym h mode "default"; exec pactl set-card-profile bluez_card.88_C9_E8_C7_4E_7B headset-head-unit-msbc
 
     # Logitech Litra Glow
-    bindsym m mode "default"; exec lc on bright 100 temp 4000
-    bindsym n mode "default"; exec lc on bright 50 temp 4000
-    bindsym b mode "default"; exec lc off
+    bindsym m mode "default"; exec "/home/kmateusz/.local/bin/lc on;  /home/kmateusz/.local/bin/lc brightness --percentage 100; /home/kmateusz/.local/bin/lc temperature --value 4000"
+    bindsym n mode "default"; exec "/home/kmateusz/.local/bin/lc on;  /home/kmateusz/.local/bin/lc brightness --percentage 50; /home/kmateusz/.local/bin/lc temperature --value 4000"
+    bindsym b mode "default"; exec /home/kmateusz/.local/bin/lc off
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -334,7 +343,7 @@ bindsym XF86MonBrightnessUp exec "light -A 10; notify-send 'brightness up'"
 bindsym XF86MonBrightnessDown exec "light -U 10; notify-send 'brightness down'"
 
 # XF86Display key - switch to laptop-only output
-bindsym XF86Display exec "swaymsg output DP-3 disable; swaymsg output eDP-1 enable"
+#bindsym XF86Display exec "swaymsg output DP-3 disable; swaymsg output eDP-1 enable"
 
 #
 # Screenshots (grim + slurp replace scrot)
@@ -348,17 +357,14 @@ bindsym $mod+Print exec grim -g "$(slurp)" ~/Pictures/Screenshots/$(date +%Y%m%d
 # Run 'swaymsg -t get_tree | jq' to find app_id/class for your apps.
 #
 
-for_window [app_id="Slack"] move to workspace 9
-for_window [class="Slack"] move to workspace 9
-for_window [app_id="thunderbird"] move to workspace 10
-for_window [class="Thunderbird"] move to workspace 10
-for_window [app_id="Spotify"] move to workspace 12
-for_window [class="Spotify"] move to workspace 12
+for_window [app_id="com.slack.Slack"] move to workspace 9
+for_window [app_id="net.thunderbird.Thunderbird"] move to workspace 10
+for_window [app_id="spotify"] move to workspace 12
 
 # Workspace output assignment (fallback to eDP-1 if external not connected)
-workspace "9" output DP-3 eDP-1
-workspace "10" output DP-3 eDP-1
-workspace "12" output DP-3 eDP-1
+workspace "9" output DP-5 DP-7 eDP-1
+workspace "10" output DP-6 DP-8 eDP-1
+workspace "12" output DP-5 DP-7 eDP-1
 
 #
 # Notification Controls (replaces dunst [shortcuts] section, which is X11-only)
@@ -383,14 +389,22 @@ bar {
 # Export Wayland environment to systemd and D-Bus so that user services
 # (dunst, xdg-desktop-portal, etc.) can find the Wayland display.
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY
+exec systemctl --user start sway-session.target
+
+# GTK theme settings (apply prefer-dark to all GTK apps under Sway)
+set $gnome-schema org.gnome.desktop.interface
+exec_always {
+    gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
+    gsettings set $gnome-schema icon-theme 'Adwaita'
+    gsettings set $gnome-schema cursor-theme 'Adwaita'
+    gsettings set $gnome-schema color-scheme 'prefer-dark'
+}
 
 # Tray applets (nm-applet needs --indicator for Wayland tray support)
 exec nm-applet --indicator
 exec pasystray
 exec flatpak run com.nextcloud.desktopclient.nextcloud
-
-# Automatic display profile switching (replaces autorandr)
-exec_always kanshi
+exec solaar --window=hide
 
 # Idle and lock configuration (replaces xss-lock + xsecurelock + xset dpms)
 exec swayidle -w \
@@ -401,3 +415,6 @@ exec swayidle -w \
 
 # PipeWire/WirePlumber default device switching
 exec pactl load-module module-switch-on-connect
+
+# Screen reconfig after restart
+# exec sleep 3; killall -s HUP kanshi
