@@ -10,7 +10,15 @@ if ! [ -f /run/.containerenv ] || ! [ -f /run/.toolboxenv ]; then
     # Gopass specific config
     export GPG_TTY=$(tty)
     {{ if eq .chezmoi.os "darwin" -}}
-    source <(/opt/homebrew/bin/gopass completion zsh)
+    if [ -n "$ZSH_VERSION" ]; then
+        # gopass zsh completion calls compdef, so make sure the zsh completion
+        # system is initialised first (this file is sourced from ~/.bashrc,
+        # which on macOS runs before ~/.zshrc).
+        autoload -Uz compinit && compinit
+        source <(/opt/homebrew/bin/gopass completion zsh)
+    elif [ -n "$BASH_VERSION" ]; then
+        source <(/opt/homebrew/bin/gopass completion bash)
+    fi
     {{ else if eq .chezmoi.os "linux" -}}
     source <(gopass completion bash)
 {{ end }}
@@ -88,12 +96,13 @@ export DID_DIR=~/.config/did/
 {{ if eq .chezmoi.os "linux" -}}
 # Google SDK and Claude Code
 export CLOUDSDK_PYTHON=/usr/bin/python3
+export GOOGLE_APPLICATION_CREDENTIALS=/home/kmateusz/.config/gcloud/application_default_credentials.json
+{{ end -}}
 export CLAUDE_CODE_USE_VERTEX=1
+export GOOGLE_GENAI_USE_VERTEXAI=true
 export CLOUD_ML_REGION=global
 export ANTHROPIC_VERTEX_PROJECT_ID=itpc-gcp-hcm-pe-eng-claude
 export GOOGLE_CLOUD_PROJECT=itpc-gcp-hcm-pe-eng-claude
-export GOOGLE_APPLICATION_CREDENTIALS=/home/kmateusz/.config/gcloud/application_default_credentials.json
-{{ end -}}
 
 # Use raw less
 unset LESSOPEN

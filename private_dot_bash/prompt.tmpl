@@ -17,6 +17,19 @@ GIT_PS1_SHOWCOLORHINTS="yes"
 GIT_PS1_SHOWDIRTYSTATE="yes"
 source ~/.bash/.git-prompt.sh
 
+if [ -n "$ZSH_VERSION" ]; then
+    # zsh prompt: PROMPT_COMMAND is bash-only, so use the zsh-native equivalent
+    # (precmd + __git_ps1 in two-argument "pcmode"). Shows user@host:cwd, the
+    # git status, and an optional Python virtualenv prefix.
+    setopt PROMPT_SUBST
+    export VIRTUAL_ENV_DISABLE_PROMPT=1
+    precmd () {
+        local venv=""
+        [ -n "$VIRTUAL_ENV" ] && venv="(${VIRTUAL_ENV:t}) "
+        __git_ps1 "${venv}%n@%M:%~" "%# "
+    }
+else
+
 # Fedora Toolbox indicator
 if [[ -f /run/.containerenv && -f /run/.toolboxenv ]]; then
     export PROMPT_COMMAND='__git_ps1 "⬢ \u@\H:\w" "\\\$ ";'
@@ -45,3 +58,4 @@ add_venv_info () {
     fi
 }
 PROMPT_COMMAND="$PROMPT_COMMAND add_venv_info"
+fi

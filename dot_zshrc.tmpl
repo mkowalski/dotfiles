@@ -1,0 +1,21 @@
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
+# Persist and de-duplicate history in zsh (parity with the HIST* settings that
+# are sourced from ~/.bash/exports through ~/.bashrc).
+HISTFILE="$HOME/.zsh_history"
+SAVEHIST="${HISTSIZE:-32768}"
+setopt HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE SHARE_HISTORY
+
+# Created by `pipx` on 2024-07-22 20:37:20
+export PATH="$PATH:{{ .chezmoi.homeDir }}/.local/bin"
