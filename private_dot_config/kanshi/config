@@ -49,16 +49,17 @@ profile home-virtual-lid-closed-2 {
     output eDP-1 disable
 }
 
+# Office Zurich - 4K monitor above laptop
+profile office-ZRH-4k {
+    # output DP-3 enable mode 3840x2160@60Hz position 0,0
+    output "Samsung Electric Company LF32TU87 *" enable mode 3840x2160@60Hz position 0,0
+    output eDP-1 enable mode 2240x1400@60Hz position 800,2160
+}
+
 # Portable monitor (Lenovo ThinkVision 14) to the right
 profile portable-right {
     output eDP-1 mode 2240x1400@60Hz position 0,0
     output DP-3 mode 2240x1400@60Hz position 2240,0
-}
-
-# Office Zurich - 4K monitor above laptop
-profile office-ZRH-4k {
-    output DP-3 enable mode 3840x2160@60Hz position 0,0
-    output eDP-1 enable mode 2240x1400@60Hz position 800,2160
 }
 
 # Office London 4s213 - 3440x1440 ultrawide above laptop

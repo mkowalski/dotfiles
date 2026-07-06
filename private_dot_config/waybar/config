@@ -1,6 +1,6 @@
 [
 {
-    "output": ["DP-5", "DP-7"],
+    "output": ["DP-5", "DP-7", "DP-3"],
     "layer": "top",
     "position": "bottom",
     "height": 36,
