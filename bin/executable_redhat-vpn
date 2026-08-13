@@ -1,17 +1,44 @@
 #!/usr/bin/bash
 set -e
 
-OTP_NAME="TOTP21406966"
-GOPASS_OTPCLIENT="corporate/pin/${OTP_NAME}"
-GOPASS_PIN="corporate/pin/oathtool"
-NM_VPN="Red Hat Global VPN"
+# Wait until all NetBird peers are connected, e.g. "Peers count: 10/10 Connected".
+wait_for_netbird() {
+    local timeout=60 elapsed=0 line
+    while [ "${elapsed}" -lt "${timeout}" ]; do
+        line=$(netbird status 2>/dev/null | grep -E '^Peers count:' || true)
+        # Extract "X/Y" from the "Peers count: X/Y Connected" line.
+        if [[ "${line}" =~ Peers\ count:\ ([0-9]+)/([0-9]+)\ Connected ]]; then
+            local connected="${BASH_REMATCH[1]}" total="${BASH_REMATCH[2]}"
+            if [ "${total}" -gt 0 ] && [ "${connected}" -eq "${total}" ]; then
+                echo "NetBird connected (${connected}/${total} peers)."
+                return 0
+            fi
+            echo "Waiting for peers to connect (${connected}/${total})..."
+        else
+            echo "Waiting for NetBird status..."
+        fi
+        sleep 2
+        elapsed=$((elapsed + 2))
+    done
+    echo "Timed out waiting for NetBird peers to connect." >&2
+    return 1
+}
 
-OTPPIN=$(gopass -f ${GOPASS_OTPCLIENT})
-TOKEN=$(oathtool -b --totp ${OTPPIN})
-PIN=$(gopass -f ${GOPASS_PIN})
-PASSWORD=${PIN}${TOKEN}
+# Connect to the Red Hat network via NetBird.
+# If already connected, try to refresh the SSO session without tearing
+# down the tunnel; only fall back to a full "netbird up" if that fails.
+if netbird status -C ready >/dev/null 2>&1; then
+    echo "NetBird is already connected, extending SSO session..."
+    if ! netbird login --extend; then
+        echo "Extending session failed, bringing the connection up..."
+        netbird up
+    fi
+else
+    echo "Connecting to NetBird..."
+    netbird up
+fi
 
-echo vpn.secrets.password:${PASSWORD} | nmcli connection up "${NM_VPN}" passwd-file /dev/fd/0
+wait_for_netbird
 
 # Additionally get the kerberos ticket after connection
 KERBEROS_USERNAME="mkowalsk"
