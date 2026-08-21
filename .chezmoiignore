@@ -10,6 +10,7 @@ com.visualstudio.code-settings.json
 .config/gtk-4.0
 .config/i3
 .config/sway
+.config/systemd
 .config/kanshi
 .config/waybar
 .config/swaylock
