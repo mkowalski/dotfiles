@@ -2,6 +2,10 @@ README.md
 com.visualstudio.code-settings.json
 
 {{- if ne .chezmoi.os "linux" }}
+.Xresources
+.var
+bin/lock-wrapper
+bin/logitech-mouse-configure
 .config/alacritty
 .config/autorandr
 .config/Code
