@@ -3,7 +3,7 @@ Description=bugwarrior-pull
 
 [Service]
 Environment="DISPLAY=:0"
-ExecStart=/home/kmateusz/.local/bin/bugwarrior-pull
+ExecStart={{ .chezmoi.homeDir }}/.local/bin/bugwarrior-pull
 Type=oneshot
 
 [Install]

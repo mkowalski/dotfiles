@@ -96,7 +96,7 @@ export DID_DIR=~/.config/did/
 {{ if eq .chezmoi.os "linux" -}}
 # Google SDK and Claude Code
 export CLOUDSDK_PYTHON=/usr/bin/python3
-export GOOGLE_APPLICATION_CREDENTIALS=/home/kmateusz/.config/gcloud/application_default_credentials.json
+export GOOGLE_APPLICATION_CREDENTIALS={{ .chezmoi.homeDir }}/.config/gcloud/application_default_credentials.json
 {{ end -}}
 
 # Use raw less

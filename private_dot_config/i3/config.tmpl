@@ -205,7 +205,7 @@ mode $powerMode {
     bindsym s mode "default"; exec "autorandr -l default && systemctl suspend"
     #bindsym l mode "default"; exec ~/bin/lock-wrapper 15:1
     bindsym l mode "default"; exec xset s activate
-    # bindsym l mode "default"; exec "XSECURELOCK_SAVER=/home/kmateusz/bin/lock-wrapper-2 XSECURELOCK_SHOW_HOSTNAME=0 XSECURELOCK_SHOW_USERNAME=0 XSECURELOCK_SHOW_KEYBOARD_LAYOUT=0 xsecurelock"
+    # bindsym l mode "default"; exec "XSECURELOCK_SAVER={{ .chezmoi.homeDir }}/bin/lock-wrapper-2 XSECURELOCK_SHOW_HOSTNAME=0 XSECURELOCK_SHOW_USERNAME=0 XSECURELOCK_SHOW_KEYBOARD_LAYOUT=0 xsecurelock"
     #bindsym w mode "default"; exec "sudo efibootmgr --bootnext 002C && autorandr -l default && systemctl hibernate"
     bindsym m mode "default"; exec ~/bin/logitech-mouse-configure
 
@@ -352,7 +352,7 @@ bindsym $mod+Shift+minus exec "i3-input -F 'move container to workspace number %
 bindsym --release $mod+Print exec scrot -s -e 'mv $f ~/Pictures/Screenshots/'
 
 # Set wallpaper
-exec --no-startup-id nitrogen --set-scaled "/home/kmateusz/RHT/001-corporate/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png"
+exec --no-startup-id nitrogen --set-scaled "{{ .chezmoi.homeDir }}/RHT/001-corporate/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png"
 
 # Run some applications at startup
 #exec thunderbird
@@ -371,4 +371,4 @@ exec --no-startup-id pactl load-module module-switch-on-connect
 bindsym XF86Display exec autorandr -l default
 
 # Allow xsecurelock to get events from lock&co.
-exec --no-startup-id xss-lock -n /usr/lib/xsecurelock/dimmer -l -- env XSECURELOCK_SAVER=/home/kmateusz/bin/lock-wrapper-2 XSECURELOCK_SHOW_HOSTNAME=0 XSECURELOCK_SHOW_USERNAME=0 XSECURELOCK_SHOW_KEYBOARD_LAYOUT=0 xsecurelock
+exec --no-startup-id xss-lock -n /usr/lib/xsecurelock/dimmer -l -- env XSECURELOCK_SAVER={{ .chezmoi.homeDir }}/bin/lock-wrapper-2 XSECURELOCK_SHOW_HOSTNAME=0 XSECURELOCK_SHOW_USERNAME=0 XSECURELOCK_SHOW_KEYBOARD_LAYOUT=0 xsecurelock

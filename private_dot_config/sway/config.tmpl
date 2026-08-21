@@ -75,7 +75,7 @@ input "1133:45085:Logitech_MX_Ergo_Multi-Device_Trackball" {
 #
 
 # Wallpaper (applied to all outputs)
-output * bg "/home/kmateusz/RHT/001-corporate/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png" fill
+output * bg "{{ .chezmoi.homeDir }}/RHT/001-corporate/Wallpapers/Desktop/Dark/1-Wallpaper-Red_Hat-3840x2160_Desktop-Black.png" fill
 
 # Dell U4025QW ultrawide
 # Instead of scale here, use "gsettings get org.gnome.desktop.interface text-scaling-factor"
@@ -320,9 +320,9 @@ mode $camMode {
     bindsym h mode "default"; exec pactl set-card-profile bluez_card.88_C9_E8_C7_4E_7B headset-head-unit-msbc
 
     # Logitech Litra Glow
-    bindsym m mode "default"; exec "/home/kmateusz/.local/bin/lc on;  /home/kmateusz/.local/bin/lc brightness --percentage 100; /home/kmateusz/.local/bin/lc temperature --value 4000"
-    bindsym n mode "default"; exec "/home/kmateusz/.local/bin/lc on;  /home/kmateusz/.local/bin/lc brightness --percentage 50; /home/kmateusz/.local/bin/lc temperature --value 4000"
-    bindsym b mode "default"; exec /home/kmateusz/.local/bin/lc off
+    bindsym m mode "default"; exec "{{ .chezmoi.homeDir }}/.local/bin/lc on;  {{ .chezmoi.homeDir }}/.local/bin/lc brightness --percentage 100; {{ .chezmoi.homeDir }}/.local/bin/lc temperature --value 4000"
+    bindsym n mode "default"; exec "{{ .chezmoi.homeDir }}/.local/bin/lc on;  {{ .chezmoi.homeDir }}/.local/bin/lc brightness --percentage 50; {{ .chezmoi.homeDir }}/.local/bin/lc temperature --value 4000"
+    bindsym b mode "default"; exec {{ .chezmoi.homeDir }}/.local/bin/lc off
 
     bindsym Return mode "default"
     bindsym Escape mode "default"

@@ -43,19 +43,19 @@
         username = makowals
 {{ if eq .chezmoi.hostname "Matt-X1C" -}}
 [init]
-        templateDir = /home/kmateusz/.git-template
+        templateDir = {{ .chezmoi.homeDir }}/.git-template
 [rh-pre-commit]
         checkSecrets = true
         enableLocalConfig = false
 [maintenance]
-        repo = /home/kmateusz/git/github.com/openshift-release
-        repo = /home/kmateusz/git/github.com/dev-scripts
-        repo = /home/kmateusz/git/github.com/installer
-        repo = /home/kmateusz/git/github.com/kubernetes-nmstate
-        repo = /home/kmateusz/git/github.com/machine-config-operator
-        repo = /home/kmateusz/git/github.com/metal3-dev-env
-        repo = /home/kmateusz/git/github.com/openshift-api
-        repo = /home/kmateusz/git/github.com/openshift-enhancements
+        repo = {{ .chezmoi.homeDir }}/git/github.com/openshift-release
+        repo = {{ .chezmoi.homeDir }}/git/github.com/dev-scripts
+        repo = {{ .chezmoi.homeDir }}/git/github.com/installer
+        repo = {{ .chezmoi.homeDir }}/git/github.com/kubernetes-nmstate
+        repo = {{ .chezmoi.homeDir }}/git/github.com/machine-config-operator
+        repo = {{ .chezmoi.homeDir }}/git/github.com/metal3-dev-env
+        repo = {{ .chezmoi.homeDir }}/git/github.com/openshift-api
+        repo = {{ .chezmoi.homeDir }}/git/github.com/openshift-enhancements
 {{- end }}
 [rerere]
         enabled = true
