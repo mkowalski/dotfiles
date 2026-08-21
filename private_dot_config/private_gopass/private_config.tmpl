@@ -1,25 +1,21 @@
 [core]
-  autoclip = true
-  autoimport = true
-  cliptimeout = 45
-  exportkeys = true
-  nocolor = false
-  nopager = false
-  notifications = true
-  parsing = true
-  showsafecontent = true
-{{ if eq .chezmoi.hostname "Matt-MBA" -}}
-[mounts]
-  path = /Users/mko/.password-store-private
-[mounts "redhat"]
-  path = /Users/mko/.password-store-redhat
-{{ else if eq .chezmoi.hostname "Matt-X1C" -}}
-[mounts]
-  path = ~/.password-store-redhat
-[mounts "private"]
-  path = ~/.password-store-private
-{{- end }}
+	autoimport = true
+	cliptimeout = 45
+	exportkeys = true
+	nocolor = false
+	nopager = false
+	notifications = true
+	parsing = true
+
 [show]
 	safecontent = true
 [generate]
 	autoclip = true
+[mounts]
+	path = {{ .chezmoi.homeDir }}/.password-store-private
+[mounts "redhat"]
+	path = {{ .chezmoi.homeDir }}/.password-store-redhat
+[mounts "anapaya"]
+	path = {{ .chezmoi.homeDir }}/.password-store-anapaya
+[mounts "ethz"]
+	path = {{ .chezmoi.homeDir }}/.password-store-ethz
