@@ -40,6 +40,25 @@ fi
 
 wait_for_netbird
 
+# Restrict DNS so only Red Hat domains are resolved via the VPN tunnel;
+# all other DNS requests keep using the default (non-VPN) resolvers.
+# Discover the NetBird interface dynamically by matching the NetBird IP
+# (falls back to "redhat0" if detection fails).
+# The local machine's netbirdIp is the only one carrying a CIDR suffix
+# (e.g. "100.91.103.235/15"); peer entries are bare host IPs.
+NETBIRD_IP=$(netbird status --json 2>/dev/null | grep -oE '"netbirdIp":"[0-9.]+/[0-9]+"' | head -1 | cut -d'"' -f4 | cut -d/ -f1)
+NETBIRD_IFACE=""
+if [ -n "${NETBIRD_IP}" ]; then
+    NETBIRD_IFACE=$(ip -o -4 addr show 2>/dev/null | grep " ${NETBIRD_IP}/" | awk '{print $2}')
+fi
+NETBIRD_IFACE="${NETBIRD_IFACE:-redhat0}"
+echo "Configuring split DNS on ${NETBIRD_IFACE}..."
+resolvectl status "${NETBIRD_IFACE}"
+sudo resolvectl dns "${NETBIRD_IFACE}" 100.100.100.101 100.100.100.102 100.100.100.100
+sudo resolvectl domain "${NETBIRD_IFACE}" '~redhat.com' '~red.ht' '~signalfx.com' \
+    '~openshift.com' '~openshiftapps.com' '~devshift.net' '~redhat.corp'
+sudo resolvectl default-route "${NETBIRD_IFACE}" false
+
 # Additionally get the kerberos ticket after connection
 KERBEROS_USERNAME="mkowalsk"
 KERBEROS_REALM="IPA.REDHAT.COM"
