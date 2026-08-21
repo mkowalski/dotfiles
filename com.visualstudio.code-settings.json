@@ -88,7 +88,5 @@
             "source.organizeImports": "explicit"
         }
     },
-    "docker.extension.enableComposeLanguageServer": false,
-    "gitlens.ai.model": "vscode",
-    "gitlens.ai.vscode.model": "copilot:claude-fable-5"
+    "docker.extension.enableComposeLanguageServer": false
 }
