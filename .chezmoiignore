@@ -5,6 +5,7 @@ com.visualstudio.code-settings.json
 .Xresources
 .var
 bin/lock-wrapper
+bin/litra
 bin/logitech-mouse-configure
 .config/alacritty
 .config/autorandr
