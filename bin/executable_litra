@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Retry wrapper around litra-driver's `lc`.
+# lc crashes intermittently at import time (usb.core.USBError: Invalid descriptor
+# while reading the product string in find_devices()) — before executing anything,
+# so retrying is safe and side-effect free.
+for _ in 1 2 3 4 5; do
+    if "$HOME/.local/bin/lc" "$@"; then
+        exit 0
+    fi
+    sleep 0.3
+done
+echo "litra: lc failed after 5 attempts" >&2
+exit 1

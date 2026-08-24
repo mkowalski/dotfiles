@@ -320,9 +320,9 @@ mode $camMode {
     bindsym h mode "default"; exec pactl set-card-profile bluez_card.88_C9_E8_C7_4E_7B headset-head-unit-msbc
 
     # Logitech Litra Glow
-    bindsym m mode "default"; exec "{{ .chezmoi.homeDir }}/.local/bin/lc on;  {{ .chezmoi.homeDir }}/.local/bin/lc brightness --percentage 100; {{ .chezmoi.homeDir }}/.local/bin/lc temperature --value 4000"
-    bindsym n mode "default"; exec "{{ .chezmoi.homeDir }}/.local/bin/lc on;  {{ .chezmoi.homeDir }}/.local/bin/lc brightness --percentage 50; {{ .chezmoi.homeDir }}/.local/bin/lc temperature --value 4000"
-    bindsym b mode "default"; exec {{ .chezmoi.homeDir }}/.local/bin/lc off
+    bindsym m mode "default"; exec {{ .chezmoi.homeDir }}/bin/litra on bright 100 temp 4000
+    bindsym n mode "default"; exec {{ .chezmoi.homeDir }}/bin/litra on bright 50 temp 4000
+    bindsym b mode "default"; exec {{ .chezmoi.homeDir }}/bin/litra off
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -390,6 +390,9 @@ bar {
 # (dunst, xdg-desktop-portal, etc.) can find the Wayland display.
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY
 exec systemctl --user start sway-session.target
+# Re-apply kanshi profile on every config reload — sway re-runs its own `output`
+# commands on reload, clobbering the layout, and kanshi gets no hotplug event.
+exec_always systemctl --user try-restart kanshi.service
 
 # GTK theme settings (apply prefer-dark to all GTK apps under Sway)
 set $gnome-schema org.gnome.desktop.interface
