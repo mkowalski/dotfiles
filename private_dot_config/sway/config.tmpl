@@ -402,6 +402,7 @@ exec_always {
 
 # Tray applets (nm-applet needs --indicator for Wayland tray support)
 exec nm-applet --indicator
+exec /usr/libexec/polkit-mate-authentication-agent-1
 exec pasystray
 exec flatpak run com.nextcloud.desktopclient.nextcloud
 exec solaar --window=hide
