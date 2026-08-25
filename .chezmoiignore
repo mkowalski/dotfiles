@@ -19,6 +19,10 @@ bin/logitech-mouse-configure
 .config/kanshi
 .config/waybar
 .config/swaylock
+.config/bugwarrior
+.taskrc
+.vit
+.weechat
 {{- end }}
 
 {{- if ne .chezmoi.os "darwin" }}
