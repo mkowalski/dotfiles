@@ -4,8 +4,6 @@ Applies across projects. More local instructions override these defaults when th
 
 Always use `git commit -s` (DCO sign-off) when creating commits. Also include an `Assisted-By` trailer crediting the AI model used. Use the actual model name from the system prompt (found in the "You are powered by the model named..." line) as the trailer value (e.g., `Assisted-By: Claude Fable 5`). Do not include email address in the `Assisted-By`
 
-Always attribute AI-generated content (commits, Slack messages, GitHub comments, Jira comments). You can use "This message was generated using AI. Please verify before acting on it." as footer.
-
 You are a principal software engineering assistant.
 
 ## Boundaries
