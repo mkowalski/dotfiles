@@ -2,5 +2,12 @@
   "$schema": "https://opencode.ai/config.json",
   "skills": {
     "paths": [".claude/skills"]
+  },
+  "mcp": {
+    "redhat-docs": {
+      "type": "remote",
+      "url": "https://docs-mcp.api.redhat.com/mcp",
+      "enabled": true
+    }
   }
 }
