@@ -3,5 +3,12 @@
   "plugins": ["superpowers@git+https://github.com/obra/superpowers.git"],
   "skills": {
     "paths": [".claude/skills"]
+  },
+  "mcp": {
+    "redhat-docs": {
+      "type": "remote",
+      "url": "https://docs-mcp.api.redhat.com/mcp",
+      "enabled": true
+    }
   }
 }
