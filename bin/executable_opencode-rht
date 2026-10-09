@@ -1,0 +1,14 @@
+unset GEMINI_API_KEY
+unset OPENAI_API_KEY
+
+unset CLAUDE_CODE_USE_VERTEX
+unset GOOGLE_GENAI_USE_VERTEXAI
+unset CLOUD_ML_REGION
+unset GOOGLE_CLOUD_LOCATION
+unset ANTHROPIC_VERTEX_PROJECT_ID
+unset GOOGLE_CLOUD_PROJECT
+unset GOOGLE_APPLICATION_CREDENTIALS
+
+export XDG_CONFIG_HOME="$HOME/.config/opencode-enmaas"
+export XDG_DATA_HOME="$HOME/.local/share/opencode-enmaas"
+opencode --standalone

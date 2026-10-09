@@ -1,0 +1,32 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "/home/mkowalsk/.config/opencode-enmaas/opencode/plugins/enmaas-compat"
+  ],
+  "model": "openai/rits/zai-org/glm-5-3",
+  "providers": {
+    "enmaas": {
+      "name": "EnMaaS",
+      "env": ["ENMAAS_KEY"],
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "https://api.enmaas.devshift.net/v1"
+      },
+      "models": {
+        "rits/zai-org/glm-5-3": {
+          "name": "GLM 5.3",
+          "limit": { "context": 262144, "output": 65536 }
+        }
+      }
+    },
+    "openai": {
+      "settings": { "baseURL": "https://api.enmaas.devshift.net/v1" },
+      "env": ["ENMAAS_KEY"]
+    },
+    "anthropic": {
+      "settings": { "baseURL": "https://api.enmaas.devshift.net/v1" },
+      "env": ["ENMAAS_KEY"]
+    }
+  }
+}
