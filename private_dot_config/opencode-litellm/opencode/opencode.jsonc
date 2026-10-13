@@ -9,7 +9,7 @@
       "package": "@opencode/ai/providers/openai-compatible",
       "name": "LiteLLM (Proxy)",
       "settings": {
-        "baseURL": "http://10.4.0.16:4000/v1"
+        "baseURL": "https://llm.mkowalski.com/v1"
         },
       "models": {
         "github_copilot/claude-opus-5.5": {
