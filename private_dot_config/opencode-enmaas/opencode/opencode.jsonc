@@ -2,7 +2,8 @@
   "$schema": "https://opencode.ai/config.json",
   "plugins": [
     "superpowers@git+https://github.com/obra/superpowers.git",
-    "/home/mkowalsk/.config/opencode-enmaas/opencode/plugins/enmaas-compat"
+    "/home/mkowalsk/.config/opencode-enmaas/opencode/plugins/enmaas-compat",
+    "opencode-plugin-litellm@latest"
   ],
   "model": "openai/rits/zai-org/glm-5-3",
   "providers": {
@@ -27,6 +28,27 @@
     "anthropic": {
       "settings": { "baseURL": "https://api.enmaas.devshift.net/v1" },
       "env": ["ENMAAS_KEY"]
+    },
+    "litellm": {
+      "package": "@opencode/ai/providers/openai-compatible",
+      "name": "LiteLLM (Proxy)",
+      "settings": {
+        "baseURL": "https://llm.mkowalski.com/v1"
+        },
+      "models": {
+        "github_copilot/claude-opus-5.5": {
+          "compatibility": { "maxTokensField": "max_tokens", "cacheFormat": "anthropic" }
+        },
+        "github_copilot/claude-opus-4.8": {
+          "compatibility": { "maxTokensField": "max_tokens", "cacheFormat": "anthropic" }
+        },
+        "github_copilot/claude-fable-5.1": {
+          "compatibility": { "maxTokensField": "max_tokens", "cacheFormat": "anthropic" }
+        },
+        "github_copilot/claude-fable-5": {
+          "compatibility": { "maxTokensField": "max_tokens", "cacheFormat": "anthropic" }
+        }
+      }
     }
   }
 }
