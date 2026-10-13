@@ -1,0 +1,30 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "opencode-plugin-litellm@latest"
+  ],
+  "providers": {
+    "litellm": {
+      "package": "@opencode/ai/providers/openai-compatible",
+      "name": "LiteLLM (Proxy)",
+      "settings": {
+        "baseURL": "http://10.4.0.16:4000/v1"
+        },
+      "models": {
+        "github_copilot/claude-opus-5.5": {
+          "compatibility": { "maxTokensField": "max_tokens", "cacheFormat": "anthropic" }
+        },
+        "github_copilot/claude-opus-4.8": {
+          "compatibility": { "maxTokensField": "max_tokens", "cacheFormat": "anthropic" }
+        },
+        "github_copilot/claude-fable-5.1": {
+          "compatibility": { "maxTokensField": "max_tokens", "cacheFormat": "anthropic" }
+        },
+        "github_copilot/claude-fable-5": {
+          "compatibility": { "maxTokensField": "max_tokens", "cacheFormat": "anthropic" }
+        }
+      }
+    }
+  }
+}
