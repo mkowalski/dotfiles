@@ -36,18 +36,31 @@
         "baseURL": "https://llm.mkowalski.com/v1",
         "apiKey": "{env:LITELLM_API_KEY}"
         },
+      "env": ["LITELLM_API_KEY"],
       "models": {
-        "github_copilot/claude-opus-5.5": {
-          "compatibility": { "maxTokensField": "max_tokens", "cacheFormat": "anthropic" }
+        "github_copilot/gpt-6.1-sol": {
+          "package": "@opencode/ai/providers/openai/responses",
+          "limit": { "context": 922000, "output": 128000 },
+          "settings": { "reasoningSummary": "auto" },
+          "variants": [
+            { "id": "max", "settings": { "reasoningEffort": "max" } }
+          ]
         },
-        "github_copilot/claude-opus-4.8": {
-          "compatibility": { "maxTokensField": "max_tokens", "cacheFormat": "anthropic" }
+        "github_copilot/gpt-6-astra": {
+          "package": "@opencode/ai/providers/openai/responses",
+          "limit": { "context": 1050000, "output": 128000 },
+          "settings": { "reasoningSummary": "auto" },
+          "variants": [
+            { "id": "max", "settings": { "reasoningEffort": "max" } }
+          ]
         },
-        "github_copilot/claude-fable-5.1": {
-          "compatibility": { "maxTokensField": "max_tokens", "cacheFormat": "anthropic" }
-        },
-        "github_copilot/claude-fable-5": {
-          "compatibility": { "maxTokensField": "max_tokens", "cacheFormat": "anthropic" }
+        "github_copilot/gpt-5.6-sol": {
+          "package": "@opencode/ai/providers/openai/responses",
+          "limit": { "context": 922000, "output": 128000 },
+          "settings": { "reasoningSummary": "auto" },
+          "variants": [
+            { "id": "max", "settings": { "reasoningEffort": "max" } }
+          ]
         }
       }
     }
