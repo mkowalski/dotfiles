@@ -29,3 +29,8 @@ bin/logitech-mouse-configure
 .zshrc
 .zprofile
 {{- end }}
+
+{{- if ne .chezmoi.hostname "mkowalsk-x1c-rht" }}
+.config/opencode-enmaas
+bin/opencode-rht
+{{- end }}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "opencode-plugin-litellm@latest"
+  ],
+  "model": "litellm/github_copilot/gpt-6.1-sol",
+{{- if eq .chezmoi.hostname "mkowalsk-x1c-rht" }}
+  "mcp": {
+    "servers": {
+      "redhat-docs": {
+        "type": "remote",
+        "url": "https://docs-mcp.api.redhat.com/mcp"
+      }
+    }
+  },
+{{- end }}
+  "providers": {
+    "litellm": {{ template "opencode-litellm-provider.jsonc" . }}
+  }
+}
