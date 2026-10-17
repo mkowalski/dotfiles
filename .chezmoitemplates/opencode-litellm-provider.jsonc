@@ -30,6 +30,16 @@
           "variants": [
             { "id": "max", "settings": { "reasoningEffort": "max" } }
           ]
+        },
+        "github_copilot/claude-fable-5.1": {
+          "package": "@opencode/ai/providers/anthropic-compatible",
+          "limit": { "context": 1000000, "input": 936000, "output": 64000 },
+          "variants": [
+            {
+              "id": "max",
+              "settings": { "thinking": { "type": "adaptive", "display": "summarized" }, "effort": "max" }
+            }
+          ]
         }
       }
     }
