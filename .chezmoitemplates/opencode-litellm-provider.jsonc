@@ -10,6 +10,7 @@
         "github_copilot/gpt-6.1-sol": {
           "package": "@opencode/ai/providers/openai/responses",
           "limit": { "context": 922000, "output": 128000 },
+          "capabilities": { "tools": true, "input": ["text", "image", "pdf"], "output": ["text"] },
           "settings": { "reasoningSummary": "auto" },
           "variants": [
             { "id": "max", "settings": { "reasoningEffort": "max" } }
@@ -18,6 +19,7 @@
         "github_copilot/gpt-6-astra": {
           "package": "@opencode/ai/providers/openai/responses",
           "limit": { "context": 1050000, "output": 128000 },
+          "capabilities": { "tools": true, "input": ["text", "image", "pdf"], "output": ["text"] },
           "settings": { "reasoningSummary": "auto" },
           "variants": [
             { "id": "max", "settings": { "reasoningEffort": "max" } }
@@ -26,6 +28,7 @@
         "github_copilot/gpt-5.6-sol": {
           "package": "@opencode/ai/providers/openai/responses",
           "limit": { "context": 922000, "output": 128000 },
+          "capabilities": { "tools": true, "input": ["text", "image", "pdf"], "output": ["text"] },
           "settings": { "reasoningSummary": "auto" },
           "variants": [
             { "id": "max", "settings": { "reasoningEffort": "max" } }
@@ -34,6 +37,7 @@
         "github_copilot/claude-fable-5.1": {
           "package": "@opencode/ai/providers/anthropic-compatible",
           "limit": { "context": 1000000, "input": 936000, "output": 64000 },
+          "capabilities": { "tools": true, "input": ["text", "image", "pdf"], "output": ["text"] },
           "variants": [
             {
               "id": "max",
