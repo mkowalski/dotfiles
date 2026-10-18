@@ -3,7 +3,8 @@
   "plugins": [
     "superpowers@git+https://github.com/obra/superpowers.git",
     "{{ .chezmoi.homeDir }}/.config/opencode-enmaas/opencode/plugins/enmaas-compat",
-    "opencode-plugin-litellm@latest"
+    "opencode-plugin-litellm@1.5.0",
+    "{{ .chezmoi.homeDir }}/.config/opencode/plugins/litellm-anthropic-variants"
   ],
   "model": "openai/rits/zai-org/glm-5-3",
   "providers": {
@@ -29,6 +30,6 @@
       "settings": { "baseURL": "https://api.enmaas.devshift.net/v1" },
       "env": ["ENMAAS_KEY"]
     },
-    "litellm": {{ template "opencode-litellm-provider.jsonc" . }}
+    {{ template "opencode-litellm-provider.jsonc" . }}
   }
 }

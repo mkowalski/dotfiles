@@ -11,4 +11,5 @@ unset GOOGLE_APPLICATION_CREDENTIALS
 
 export XDG_CONFIG_HOME="$HOME/.config/opencode-enmaas"
 export XDG_DATA_HOME="$HOME/.local/share/opencode-enmaas"
+export XDG_CACHE_HOME="$HOME/.cache/opencode-enmaas"
 opencode --standalone

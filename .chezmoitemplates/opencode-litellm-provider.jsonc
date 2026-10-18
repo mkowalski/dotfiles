@@ -1,49 +1,22 @@
-{
+"litellm": {
       "package": "@opencode/ai/providers/openai-compatible",
       "name": "LiteLLM (Proxy)",
+      "env": ["LITELLM_API_KEY"],
       "settings": {
         "baseURL": "https://llm.mkowalski.com/v1",
-        "apiKey": "{env:LITELLM_API_KEY}"
-      },
+        "apiKey": "{env:LITELLM_API_KEY}",
+        "excludeModels": ["*claude*", "veo*", "imagen*"],
+        "reasoningSummary": "auto"
+      }
+    },
+    "litellm-claude": {
+      "package": "@opencode/ai/providers/anthropic-compatible",
+      "name": "LiteLLM Claude (Proxy)",
       "env": ["LITELLM_API_KEY"],
-      "models": {
-        "github_copilot/gpt-6.1-sol": {
-          "package": "@opencode/ai/providers/openai/responses",
-          "limit": { "context": 922000, "output": 128000 },
-          "capabilities": { "tools": true, "input": ["text", "image", "pdf"], "output": ["text"] },
-          "settings": { "reasoningSummary": "auto" },
-          "variants": [
-            { "id": "max", "settings": { "reasoningEffort": "max" } }
-          ]
-        },
-        "github_copilot/gpt-6-astra": {
-          "package": "@opencode/ai/providers/openai/responses",
-          "limit": { "context": 1050000, "output": 128000 },
-          "capabilities": { "tools": true, "input": ["text", "image", "pdf"], "output": ["text"] },
-          "settings": { "reasoningSummary": "auto" },
-          "variants": [
-            { "id": "max", "settings": { "reasoningEffort": "max" } }
-          ]
-        },
-        "github_copilot/gpt-5.6-sol": {
-          "package": "@opencode/ai/providers/openai/responses",
-          "limit": { "context": 922000, "output": 128000 },
-          "capabilities": { "tools": true, "input": ["text", "image", "pdf"], "output": ["text"] },
-          "settings": { "reasoningSummary": "auto" },
-          "variants": [
-            { "id": "max", "settings": { "reasoningEffort": "max" } }
-          ]
-        },
-        "github_copilot/claude-fable-5.1": {
-          "package": "@opencode/ai/providers/anthropic-compatible",
-          "limit": { "context": 1000000, "input": 936000, "output": 64000 },
-          "capabilities": { "tools": true, "input": ["text", "image", "pdf"], "output": ["text"] },
-          "variants": [
-            {
-              "id": "max",
-              "settings": { "thinking": { "type": "adaptive", "display": "summarized" }, "effort": "max" }
-            }
-          ]
-        }
+      "settings": {
+        "baseURL": "https://llm.mkowalski.com/v1",
+        "apiKey": "{env:LITELLM_API_KEY}",
+        "includeModels": ["*claude*"],
+        "thinking": { "type": "adaptive", "display": "summarized" }
       }
     }

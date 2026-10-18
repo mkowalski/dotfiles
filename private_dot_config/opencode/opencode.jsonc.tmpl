@@ -2,7 +2,8 @@
   "$schema": "https://opencode.ai/config.json",
   "plugins": [
     "superpowers@git+https://github.com/obra/superpowers.git",
-    "opencode-plugin-litellm@latest"
+    "opencode-plugin-litellm@1.5.0",
+    "{{ .chezmoi.homeDir }}/.config/opencode/plugins/litellm-anthropic-variants"
   ],
 {{- if eq .chezmoi.hostname "mkowalsk-x1c-rht" }}
   "mcp": {
@@ -15,6 +16,6 @@
   },
 {{- end }}
   "providers": {
-    "litellm": {{ template "opencode-litellm-provider.jsonc" . }}
+    {{ template "opencode-litellm-provider.jsonc" . }}
   }
 }
