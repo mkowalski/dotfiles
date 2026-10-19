@@ -15,6 +15,7 @@
     }
   },
 {{- end }}
+  "disabled_providers": ["opencode"],
   "providers": {
     {{ template "opencode-litellm-provider.jsonc" . }}
   }
