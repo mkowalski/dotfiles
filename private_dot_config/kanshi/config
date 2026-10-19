@@ -16,10 +16,12 @@ profile default {
     output DP-3 disable
     output DP-5 disable
     output DP-6 disable
+    exec swaymsg 'output eDP-1 power on'
 }
 
 profile laptop-only {
     output eDP-1 enable mode 2240x1400@60.021Hz position 0,0
+    exec swaymsg 'output eDP-1 power on'
 }
 
 # # Home - Dell U4025QW ultrawide, lid closed

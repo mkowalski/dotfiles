@@ -1,0 +1,4 @@
+#!/bin/sh
+# Launch waybar with stdout discarded: the battery module prints "Plugged"/"Discharging"
+# dozens of times per power event and floods the journal. stderr (real warnings) is kept.
+exec /usr/bin/waybar "$@" 1>/dev/null

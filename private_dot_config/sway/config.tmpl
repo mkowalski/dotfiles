@@ -276,11 +276,14 @@ mode $displayMode {
 # Power Mode
 #
 
-set $powerMode "[s]leep [l]ock"
-bindsym $mod+x mode $powerMode
+set $powerMode "[s]leep [l]ock [p]anel-recover"
+bindsym --locked $mod+x mode $powerMode
 mode $powerMode {
     bindsym s mode "default"; exec systemctl suspend
     bindsym l mode "default"; exec swaylock -f
+    # Blind recovery for black screen: full disable->enable cycle on the laptop panel so i915
+    # re-runs the eDP power sequencer, then all outputs on and backlight max
+    bindsym --locked p mode "default"; exec sh -c "swaymsg 'output eDP-1 disable'; sleep 1; swaymsg 'output eDP-1 enable'; swaymsg 'output * power on'; light -S 100"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -379,7 +382,7 @@ bindsym Control+grave exec dunstctl history-pop
 #
 
 bar {
-    swaybar_command waybar
+    swaybar_command {{ .chezmoi.homeDir }}/.local/bin/waybar-quiet
 }
 
 #
@@ -415,7 +418,8 @@ exec swayidle -w \
     timeout 1800 'swaylock -f' \
     timeout 1830 'swaymsg "output * power off"' \
     resume 'swaymsg "output * power on"' \
-    before-sleep 'swaylock -f'
+    before-sleep 'swaylock -f' \
+    after-resume 'swaymsg "output * power on"'
 
 # PipeWire/WirePlumber default device switching
 exec pactl load-module module-switch-on-connect
