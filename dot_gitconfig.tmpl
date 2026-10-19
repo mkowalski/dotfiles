@@ -47,15 +47,6 @@
 [rh-pre-commit]
         checkSecrets = true
         enableLocalConfig = false
-[maintenance]
-        repo = {{ .chezmoi.homeDir }}/git/github.com/openshift-release
-        repo = {{ .chezmoi.homeDir }}/git/github.com/dev-scripts
-        repo = {{ .chezmoi.homeDir }}/git/github.com/installer
-        repo = {{ .chezmoi.homeDir }}/git/github.com/kubernetes-nmstate
-        repo = {{ .chezmoi.homeDir }}/git/github.com/machine-config-operator
-        repo = {{ .chezmoi.homeDir }}/git/github.com/metal3-dev-env
-        repo = {{ .chezmoi.homeDir }}/git/github.com/openshift-api
-        repo = {{ .chezmoi.homeDir }}/git/github.com/openshift-enhancements
 {{- end }}
 [rerere]
         enabled = true
