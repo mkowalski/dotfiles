@@ -1,0 +1,229 @@
+#!/opt/homebrew/bin/python3 -I
+"""Fail-closed Git secret checks; raw blobs, central policy, no live validation."""
+
+import os
+from pathlib import Path, PurePosixPath
+import re
+import subprocess
+import sys
+import tempfile
+
+
+PROFILE = Path(__file__).resolve().parent
+GIT = "/usr/bin/git"
+SCANNER = "/opt/homebrew/bin/betterleaks"
+TIMEOUT = 60
+OID = re.compile(rb"(?:[0-9a-f]{40}|[0-9a-f]{64})\Z")
+
+
+class GuardError(Exception):
+    pass
+
+
+def git_env():
+    return dict(os.environ, GIT_NO_REPLACE_OBJECTS="1", GIT_NO_LAZY_FETCH="1")
+
+
+def git(*args, input=None, output=subprocess.PIPE):
+    result = subprocess.run([GIT, *args], input=input, stdout=output,
+                            stderr=subprocess.PIPE, timeout=TIMEOUT, env=git_env())
+    if result.returncode:
+        raise GuardError("Git inspection failed; nothing was approved")
+    return result.stdout
+
+
+def parse_diff(raw):
+    """Read --raw -z --no-renames --no-abbrev records without decoding paths."""
+    if not raw:
+        return []
+    fields = raw.split(b"\0")
+    if fields.pop() != b"" or len(fields) % 2:
+        raise GuardError("incomplete Git diff")
+    entries = []
+    seen = set()
+    for header, path in zip(fields[::2], fields[1::2]):
+        parts = header.split()
+        if len(parts) != 5 or not parts[0].startswith(b":"):
+            raise GuardError("unsupported Git diff record")
+        mode, oid, status = parts[1], parts[3], parts[4]
+        if status not in (b"A", b"C", b"M", b"R", b"T") or not OID.fullmatch(oid):
+            raise GuardError("unresolved or unsupported Git change")
+        if mode == b"160000":
+            continue  # A gitlink records a commit; its contents belong to another repo.
+        if mode not in (b"100644", b"100755", b"120000"):
+            raise GuardError("unsupported Git file mode")
+        if path in seen:
+            raise GuardError("duplicate Git path")
+        seen.add(path)
+        relative = PurePosixPath(os.fsdecode(path))
+        if not path or relative.is_absolute() or any(p in (".", "..", ".git") for p in path.decode(errors="surrogateescape").split("/")):
+            raise GuardError("unsafe Git path")
+        entries.append((relative, oid))
+    return entries
+
+
+def staged_entries():
+    return parse_diff(git("diff", "--cached", "--raw", "-z", "--no-renames",
+                          "--no-abbrev", "--diff-filter=d", "--no-ext-diff", "--no-textconv"))
+
+
+def outgoing_snapshot(raw, snapshot):
+    """Scan all newly reachable commits, excluding only known destination tips."""
+    tips, old_tips, tag_objects = set(), set(), set()
+    for line in raw.splitlines():
+        fields = line.rsplit(b" ", 3)
+        if len(fields) != 4 or not OID.fullmatch(fields[1]) or not OID.fullmatch(fields[3]):
+            raise GuardError("invalid pre-push input")
+        new, old = fields[1], fields[3]
+        if new.strip(b"0") == b"":
+            continue  # Deleting a remote ref introduces no content.
+        if old.strip(b"0"):
+            # An unavailable old object is NOT an excuse to skip history.
+            result = subprocess.run([GIT, "rev-parse", "--verify", old.decode() + "^{commit}"],
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=TIMEOUT,
+                                    env=git_env())
+            if result.returncode == 0 and OID.fullmatch(result.stdout.strip()):
+                old_tips.add(result.stdout.strip())
+        chain = set()
+        while True:
+            if new in chain:
+                raise GuardError("cyclic annotated tag")
+            chain.add(new)
+            kind = git("cat-file", "-t", new.decode()).strip()
+            if kind == b"commit":
+                tips.add(new)
+                break
+            if kind != b"tag":
+                raise GuardError("push of a non-commit object requires manual review")
+            tag = git("cat-file", "tag", new.decode())
+            if new not in tag_objects:
+                directory = snapshot / "tags" / new.decode()
+                directory.mkdir(parents=True)
+                (directory / "tag-object.txt").write_bytes(tag)
+                tag_objects.add(new)
+            target = tag.split(b"\n", 1)[0].removeprefix(b"object ")
+            if not OID.fullmatch(target):
+                raise GuardError("invalid annotated tag target")
+            new = target
+    if not tips:
+        return False
+    revisions = [value.decode() for value in sorted(tips)]
+    if old_tips:
+        revisions += ["--not", *(value.decode() for value in sorted(old_tips))]
+    commits = git("rev-list", "--reverse", *revisions).splitlines()
+    for oid in commits:
+        if not OID.fullmatch(oid):
+            raise GuardError("invalid outgoing commit ID")
+        commit = git("cat-file", "commit", oid.decode())
+        header, separator, message = commit.partition(b"\n\n")
+        if not separator:
+            raise GuardError("invalid outgoing commit")
+        parents = [line[7:] for line in header.splitlines() if line.startswith(b"parent ")]
+        if any(not OID.fullmatch(parent) for parent in parents):
+            raise GuardError("invalid outgoing parent ID")
+        args = ["diff-tree", "-r", "--raw", "-z", "--no-renames", "--no-abbrev",
+                "--diff-filter=d", "--no-commit-id", "--no-ext-diff", "--no-textconv"]
+        args += [parents[0].decode(), oid.decode()] if parents else ["--root", oid.decode()]
+        destination = snapshot / "commits" / oid.decode()
+        export_blobs(parse_diff(git(*args)), destination / "repo")
+        # Stored messages are never truncated at scissors lines. Include headers,
+        # too, so credentials accidentally pasted into tag/author metadata are checked.
+        (destination / "commit-object.txt").write_bytes(commit)
+    return bool(commits or tag_objects)
+
+
+def export_blobs(entries, destination):
+    destination.mkdir(parents=True, exist_ok=False)
+    count = 0
+    for relative, oid in entries:
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        # O_EXCL rejects case/Unicode-normalization collisions on macOS, too.
+        fd = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(fd, "wb") as stream:
+            git("cat-file", "blob", oid.decode("ascii"), output=stream)
+        count += 1
+    if not destination.is_dir() or count != len(entries):
+        raise GuardError("incomplete staged snapshot")
+
+
+def validate_scanner(scanner):
+    for filename in ("policy.toml", "findings.tmpl"):
+        if not (PROFILE / filename).is_file():
+            raise GuardError("central policy or output template is missing")
+    if not Path(scanner).is_absolute() or not os.access(scanner, os.X_OK):
+        raise GuardError("Betterleaks is missing or not executable")
+    result = subprocess.run([scanner, "--version"], stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, timeout=10)
+    match = re.fullmatch(rb"betterleaks version v?(\d+)\.(\d+)\.(\d+)\s*", result.stdout)
+    if result.returncode or not match or int(match[1]) != 1 or int(match[2]) < 9:
+        raise GuardError("unsupported Betterleaks version; expected stable 1.9.x or later 1.x")
+
+
+def scan(snapshot, scanner):
+    if not snapshot.is_dir():
+        raise GuardError("scan snapshot is missing")
+    ignore = snapshot / "ignore"
+    ignore.mkdir()
+    command = [scanner, "dir", ".", "--config", str(PROFILE / "policy.toml"),
+               "--gitleaks-ignore-path", str(ignore), "--ignore-gitleaks-allow",
+               "--no-banner", "--no-color", "--redact=100", "--validation=false",
+               "--max-decode-depth=5", "--max-archive-depth=8", "--max-target-megabytes=0",
+               "--exit-code=3", "--log-level=warn",
+               "--report-format=template", "--report-template", str(PROFILE / "findings.tmpl"),
+               "--report-path=-"]
+    result = subprocess.run(command, cwd=snapshot, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, timeout=TIMEOUT,
+                            env=dict(os.environ, TMPDIR=str(snapshot)))
+    if result.returncode == 3:
+        print("secret-guard: blocked — potential secrets (rule, path:line only):", file=sys.stderr)
+        # This report template contains no source lines, matches, or secret values.
+        sys.stderr.write(result.stdout.decode("utf-8", errors="backslashreplace"))
+        raise GuardError("remove the secret or review a narrow central-policy exception")
+    if result.returncode or result.stderr:
+        # Scanner diagnostics may contain input data: never replay them into logs.
+        raise GuardError("scanner failed or reported incomplete coverage; diagnostics suppressed to protect input data")
+
+
+def main(argv):
+    scanner = SCANNER
+    if argv[:1] == ["--scanner"]:
+        if len(argv) < 3:
+            raise GuardError("usage: guard [--scanner /absolute/binary] index|commit message-file")
+        scanner, argv = argv[1], argv[2:]
+    if not argv or argv[0] not in ("index", "commit", "push"):
+        raise GuardError("usage: guard [--scanner /absolute/binary] index|commit message-file|push remote location")
+    mode, args = argv[0], argv[1:]
+    if ((mode == "index" and args) or (mode == "commit" and len(args) != 1)
+            or (mode == "push" and len(args) != 2)):
+        raise GuardError("invalid hook arguments")
+    validate_scanner(scanner)
+    entries = staged_entries() if mode != "push" else None
+    # Read relative hook paths before any scanner changes working directory.
+    message = Path(args[0]).read_bytes() if mode == "commit" else None
+    temp_root = Path(tempfile.gettempdir())
+    if (temp_root / "opencode").is_dir():
+        temp_root /= "opencode"
+    os.umask(0o077)
+    with tempfile.TemporaryDirectory(prefix="git-secret-guard-", dir=temp_root) as directory:
+        snapshot = Path(directory)
+        if mode == "push":
+            if not outgoing_snapshot(sys.stdin.buffer.read(), snapshot):
+                return
+        else:
+            export_blobs(entries, snapshot / "repo")
+            if message is not None:
+                # No scissors/comment heuristics: command-line cleanup flags aren't visible.
+                (snapshot / "commit-message.txt").write_bytes(b"Git commit message (content follows)\n\n" + message)
+        scan(snapshot, scanner)
+
+
+if __name__ == "__main__":
+    try:
+        main(sys.argv[1:])
+    except GuardError as error:
+        print(f"secret-guard: {error}; operation blocked", file=sys.stderr)
+        sys.exit(1)
+    except (OSError, ValueError, subprocess.SubprocessError):
+        print("secret-guard: inspection failed; operation blocked (input details suppressed)", file=sys.stderr)
+        sys.exit(1)

@@ -59,3 +59,12 @@
         helper =
         helper = !/usr/bin/gh auth git-credential
 
+{{ if and (eq .chezmoi.os "darwin") (eq .chezmoi.hostname "Matt-MBA") -}}
+[hook "secret-guard-index"]
+        command = {{ .chezmoi.homeDir }}/.config/git/secret-guard/guard index
+        event = pre-commit
+        event = pre-merge-commit
+[hook "secret-guard-commit"]
+        command = {{ .chezmoi.homeDir }}/.config/git/secret-guard/guard commit
+        event = commit-msg
+{{- end }}

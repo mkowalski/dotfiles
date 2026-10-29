@@ -1,0 +1,96 @@
+title = "Account-wide Git secret guard"
+betterleaksMinVersion = "v1.9.0"
+
+# Keep upstream filters intact. Do not replace global or built-in rule filters.
+[extend]
+useDefault = true
+
+# Owner-approved BPI-R4 archive false positives (2026-10-22).
+# Exact values AND exact historical paths; never exempt a file or all hashes.
+# These additive allowlists leave the inherited generic-api-key filter intact.
+[[rules]]
+id = "generic-api-key"
+    [[rules.allowlists]]
+    description = "BPI-R4 native-upload API-check file-content SHA256 pin, not a credential"
+    condition = "AND"
+    paths = ['''(?:^|/)repo/research/orchestration/stock_forced10\.py$''']
+    regexTarget = "secret"
+    regexes = ['''^fab68c5bea1d77e081a31e534b729dc7df1b85e840e284922267b7d2617ff332$''']
+
+    [[rules.allowlists]]
+    description = "BPI-R4 retained Loaded X.509 cert public fingerprint, not a private key"
+    condition = "AND"
+    paths = ['''(?:^|/)repo/evidence/key/orchestration/peer-restart/post-failure-readonly/result\.json$''']
+    regexTarget = "secret"
+    regexes = ['''^26cec8782c11c638fed1afe92844648534e0b83c$''']
+
+# Additive, rule-scoped exception approved for the three named example files.
+# The built-in generic-password filter remains inherited and unchanged.
+[[rules]]
+id = "generic-password"
+    [[rules.allowlists]]
+    description = "Recognized non-credential markers in named env examples"
+    condition = "AND"
+    paths = ['''(?:^|/)\.env\.(?:example|sample|template)$''']
+    regexTarget = "secret"
+    regexes = ['''(?i)^(?:change[-_ ]?me|replace[-_ ]?me|your[-_ ](?:token|api[-_ ]?key|password|secret)(?:[-_ ]here)?|placeholder)$''']
+
+# Upstream generic-password deliberately misses short literals and DB_PASS.
+# Restrict this stricter rule to files explicitly intended to hold credentials.
+[[rules]]
+id = "secret-guard-short-credential"
+description = "Literal credential in an environment or named secrets file"
+path = '''(?i)(?:^|/)(?:\.env(?:\.[^/]+)?|secrets\.ya?ml)$'''
+regex = '''(?im)^[ \t]*(?:export[ \t]+)?(?:[\w.-]+[_.-])?(?:password|passwd|pass|pwd|token|secret|pw|(?:secret|api|private|access)[_.-]key)[ \t]*[:=][ \t]*["']?([^"'#\r\n]*?[^"'#\r\n \t])["']?[ \t]*(?:#.*)?\r?$'''
+secretGroup = 1
+keywords = ["password", "passwd", "pass", "pwd", "token", "secret", "pw"]
+filter = '''
+filter.matchesAny(finding["secret"], [
+  `^[ \t]*\$\{[^}]+\}[ \t]*$`,
+  `^[ \t]*\$[A-Za-z_][A-Za-z0-9_]*[ \t]*$`,
+  `^[ \t]*\{\{.*\}\}[ \t]*$`,
+  `^[ \t]*(?:ENC\[|!secret\b|!vault\b|\$ANSIBLE_VAULT\b)`
+]) || (
+  filter.matchesAny(attributes["path"], [`(?:^|/)\.env\.(?:example|sample|template)$`]) &&
+  filter.matchesAny(finding["secret"], [`(?i)^(?:change[-_ ]?me|replace[-_ ]?me|your[-_ ](?:token|api[-_ ]?key|password|secret)(?:[-_ ]here)?|placeholder)$`])
+)
+'''
+
+# Scan the entire block so a safe first value cannot hide a later literal.
+[[rules]]
+id = "secret-guard-kubernetes-literal-data"
+description = "Unencrypted values in Kubernetes Secret data or stringData"
+path = '''(?i)\.ya?ml$'''
+regex = '''(?m)^[ \t]*(?:stringData|data):[ \t]*(?:#[^\r\n]*)?(?:\r?\n(?:[ \t]+[^\r\n]*|[ \t]*$|\{\{-?[^\r\n]*\}\}[ \t]*))+'''
+keywords = ["data"]
+filter = '''
+// Scope kind detection to this document/list resource, not the whole fragment.
+let raw = finding["fragment_raw"];
+let indent = len(filter.findMatch(finding["match"], `^[ \t]*`));
+let before = split(raw[:finding["match_start_idx"]], "\n");
+let after = split(raw[finding["match_end_idx"]:], "\n");
+let start = findLastIndex(before, {
+  filter.matchesAny(#, [`^(?:---|\.\.\.)[ \t]*(?:#[^\r]*)?\r?$`, `^[ \t]*-[ \t]+[\w.-]+:`]) &&
+  len(filter.findMatch(#, `^[ \t]*`)) <= indent
+}) ?? 0;
+let end = findIndex(after, {
+  filter.matchesAny(#, [`^(?:---|\.\.\.)[ \t]*(?:#[^\r]*)?\r?$`, `^[ \t]*-[ \t]+[\w.-]+:`]) &&
+  len(filter.findMatch(#, `^[ \t]*`)) <= indent
+}) ?? len(after);
+let document = join(before[start:], "\n") + "\n" + finding["secret"] + "\n" + join(after[:end], "\n");
+// An indented list resource can have sibling fields after the data block.
+let lines = split(finding["secret"], "\n")[1:];
+let stop = findIndex(lines, {
+  !filter.matchesAny(#, [`^[ \t]*(?:#.*|\{\{.*\}\})?\r?$`]) &&
+  len(filter.findMatch(#, `^[ \t]*`)) <= indent
+}) ?? len(lines);
+!any(split(document, "\n"), {
+  filter.matchesAny(#, [`^[ \t]*(?:-[ \t]+)?kind:[ \t]*["']?Secret["']?[ \t]*(?:#.*)?\r?$`]) &&
+  len(filter.findMatch(#, `^[ \t]*`)) <= indent
+}) || all(lines[:stop], {
+  filter.matchesAny(#, [
+    `^[ \t]*(?:#.*|\{\{.*\}\})?\r?$`,
+    `^[ \t]+[\w.-]+:[ \t]*(?:["']?(?:ENC\[|!secret\b|!vault\b)|["']?\$\{[^}]+\}["']?[ \t]*\r?$|["']?\{\{.*\}\}["']?[ \t]*\r?$|["']{2}[ \t]*\r?$|(?:#.*)?\r?$)`
+  ])
+})
+'''

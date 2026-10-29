@@ -38,3 +38,10 @@ bin/logitech-mouse-configure
 .config/opencode-enmaas
 bin/opencode-rht
 {{- end }}
+
+.config/git/secret-guard/backups
+.config/git/secret-guard/__pycache__
+
+{{- if not (and (eq .chezmoi.os "darwin") (eq .chezmoi.hostname "Matt-MBA")) }}
+.config/git/secret-guard
+{{- end }}
