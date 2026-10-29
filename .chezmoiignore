@@ -25,6 +25,10 @@ bin/logitech-mouse-configure
 .weechat
 {{- end }}
 
+{{- if or (ne .chezmoi.os "linux") (not (lookPath "/usr/bin/waybar")) }}
+.local/bin/waybar-quiet
+{{- end }}
+
 {{- if ne .chezmoi.os "darwin" }}
 .zshrc
 .zprofile
