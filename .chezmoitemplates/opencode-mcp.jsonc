@@ -1,0 +1,12 @@
+"mcp": {
+    "servers": {
+      "slack": {
+        "type": "local",
+        "command": [
+          "/bin/bash",
+          "-c",
+          "set +x; source \"$HOME/.bash/exports-api-keys\" >/dev/null || exit 1; export SLACK_MCP_XOXC_TOKEN=\"$SLACK_XOXC\" SLACK_MCP_XOXD_TOKEN=\"$SLACK_XOXD\" SLACK_MCP_USER_AGENT=\"$SLACK_USERAGENT\"; exec npx -y slack-mcp-server@latest --transport stdio --no-cache"
+        ]
+      }
+    }
+  }

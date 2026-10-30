@@ -7,6 +7,7 @@
     "{{ .chezmoi.homeDir }}/.config/opencode/plugins/litellm-anthropic-variants"
   ],
   "model": "openai/rits/zai-org/glm-5-3",
+  {{ template "opencode-mcp.jsonc" . }},
   "disabled_providers": ["opencode"],
   "providers": {
     "enmaas": {

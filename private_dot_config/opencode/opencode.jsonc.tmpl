@@ -5,16 +5,7 @@
     "opencode-plugin-litellm@1.7.1",
     "{{ .chezmoi.homeDir }}/.config/opencode/plugins/litellm-anthropic-variants"
   ],
-{{- if eq .chezmoi.hostname "mkowalsk-x1c-rht" }}
-  "mcp": {
-    "servers": {
-      "redhat-docs": {
-        "type": "remote",
-        "url": "https://docs-mcp.api.redhat.com/mcp"
-      }
-    }
-  },
-{{- end }}
+  {{ template "opencode-mcp.jsonc" . }},
   "disabled_providers": ["opencode"],
   "providers": {
     {{ template "opencode-litellm-provider.jsonc" . }}
