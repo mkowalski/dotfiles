@@ -2,6 +2,10 @@
     "servers": {
       "slack": {
         "type": "local",
+        "environment": {
+          "SLACK_MCP_CUSTOM_TLS": "true",
+          "SLACK_MCP_CACHE_TTL": "0"
+        },
         "command": [
           "/bin/bash",
           "-c",
